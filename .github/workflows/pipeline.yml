@@ -1,0 +1,55 @@
+
+name: Universal ML Deployment Pipeline
+
+on:
+  push:
+    paths:
+      - 'input/**'
+      - '**.onnx'
+      - '**.pt'
+      - '**.tflite'
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        hardware:
+          - raspberry_pi
+          - jetson
+          - android
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: |
+          mkdir -p output reports artifacts input
+
+      - name: Run optimization pipeline
+        run: |
+          python main.py             --model input/model.onnx             --hardware ${{ matrix.hardware }}
+
+      - name: Package deployment bundle
+        run: |
+          python deploy/package.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: optimized-${{ matrix.hardware }}
+          path: |
+            deployment_bundle.zip
+            reports/
+            output/

@@ -1,0 +1,4 @@
+
+name: NVIDIA Jetson
+format: tensorrt
+quantization: fp16

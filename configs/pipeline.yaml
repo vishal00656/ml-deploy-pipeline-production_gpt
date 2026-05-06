@@ -1,0 +1,4 @@
+
+default_quantization: int8
+benchmark: true
+generate_reports: true

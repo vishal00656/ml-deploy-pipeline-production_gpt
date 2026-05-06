@@ -1,0 +1,4 @@
+
+name: Android
+format: tflite
+quantization: int8

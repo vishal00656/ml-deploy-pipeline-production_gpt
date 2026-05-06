@@ -1,0 +1,4 @@
+
+name: Raspberry Pi
+format: tflite
+quantization: int8
