@@ -1,28 +1,23 @@
-
 name: Universal ML Deployment Pipeline
 
 on:
-  push:
-    paths:
-      - 'input/**'
-      - '**.onnx'
-      - '**.pt'
-      - '**.pth'
-      - '**.h5'
-      - '**.keras'
-      - '**.pb'
-      - '**.py'
+  workflow_dispatch:
+    inputs:
+      hardware:
+        description: "Select target hardware"
+        required: true
+        default: "raspberry_pi"
+        type: choice
+        options:
+          - raspberry_pi
+          - jetson
+          - android
+          - esp32
+          - arm_cpu
 
 jobs:
   optimize:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        hardware:
-          - raspberry_pi
-          - jetson
-          - android
 
     steps:
 
@@ -42,9 +37,21 @@ jobs:
         run: |
           mkdir -p output reports artifacts converted
 
-      - name: Run pipeline
+      - name: Detect uploaded model
+        id: detect_model
         run: |
-          python main.py             --model input/model.pt             --hardware ${{ matrix.hardware }}
+          MODEL=$(find input -type f \( -name "*.pt" -o -name "*.onnx" -o -name "*.h5" -o -name "*.pb" -o -name "*.keras" -o -name "*.py" \) | head -n 1)
+
+          echo "MODEL_PATH=$MODEL" >> $GITHUB_ENV
+
+          echo "Detected model:"
+          echo $MODEL
+
+      - name: Run optimization pipeline
+        run: |
+          python main.py \
+            --model ${{ env.MODEL_PATH }} \
+            --hardware ${{ github.event.inputs.hardware }}
 
       - name: Package deployment bundle
         run: |
@@ -53,7 +60,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: optimized-${{ matrix.hardware }}
+          name: optimized-${{ github.event.inputs.hardware }}
           path: |
             output/
             reports/
