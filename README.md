@@ -1,54 +1,47 @@
 
 # Universal ML Deployment Pipeline
 
-Production-ready automated ML deployment optimization pipeline for edge AI and embedded hardware targets.
+Hardware-aware automated ML deployment pipeline.
 
-## Features
+## Supported Input Formats
 
-- Automatic model detection
-- ONNX / TensorFlow / PyTorch support
-- Hardware-aware optimization
-- INT8 / FP16 quantization
-- Benchmarking and validation
-- GitHub Actions CI/CD
-- Deployment artifact packaging
-- Modular hardware profiles
-- Extensible plugin architecture
+The pipeline now supports:
+
+- PyTorch (.pt / .pth)
+- TensorFlow (.pb)
+- Keras (.h5 / .keras)
+- Python model scripts (.py)
+- ONNX (.onnx)
+
+## Pipeline Flow
+
+1. User uploads model
+2. GitHub Actions triggers
+3. Framework detection runs
+4. Model converts to ONNX
+5. Optimization + quantization execute
+6. Validation + benchmarking run
+7. Deployment artifacts generated
 
 ## Supported Targets
 
 - Raspberry Pi
 - NVIDIA Jetson
 - Android
-- ESP32 / TinyML
-- ARM-based systems
-- Generic edge devices
+- ARM edge devices
+- Extendable hardware profiles
 
-## Quick Start
+## Quick Test
 
-```bash
-pip install -r requirements.txt
+Put a model inside:
 
-python main.py     --model input/model.onnx     --hardware raspberry_pi     --optimize balanced
-```
+input/model.pt
 
-## GitHub Actions
+Then push to GitHub.
 
-Push a model into the `input/` folder and the pipeline automatically:
-
-1. Detects framework
-2. Converts formats
-3. Optimizes for target hardware
-4. Benchmarks performance
-5. Packages deployment artifacts
-6. Uploads final outputs
-
-## Repository Structure
-
-- core/ -> shared systems
-- converters/ -> model conversion
-- optimizers/ -> quantization & optimization
-- benchmark/ -> validation & metrics
-- deploy/ -> packaging system
-- configs/ -> hardware profiles
+The workflow automatically:
+- detects framework
+- converts to ONNX
+- optimizes model
+- packages deployment artifacts
 

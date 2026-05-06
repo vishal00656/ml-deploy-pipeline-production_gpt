@@ -7,7 +7,11 @@ on:
       - 'input/**'
       - '**.onnx'
       - '**.pt'
-      - '**.tflite'
+      - '**.pth'
+      - '**.h5'
+      - '**.keras'
+      - '**.pb'
+      - '**.py'
 
 jobs:
   optimize:
@@ -21,7 +25,8 @@ jobs:
           - android
 
     steps:
-      - name: Checkout
+
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -33,13 +38,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Create directories
+      - name: Create required directories
         run: |
-          mkdir -p output reports artifacts input
+          mkdir -p output reports artifacts converted
 
-      - name: Run optimization pipeline
+      - name: Run pipeline
         run: |
-          python main.py             --model input/model.onnx             --hardware ${{ matrix.hardware }}
+          python main.py             --model input/model.pt             --hardware ${{ matrix.hardware }}
 
       - name: Package deployment bundle
         run: |
@@ -50,6 +55,6 @@ jobs:
         with:
           name: optimized-${{ matrix.hardware }}
           path: |
-            deployment_bundle.zip
-            reports/
             output/
+            reports/
+            deployment_bundle.zip
