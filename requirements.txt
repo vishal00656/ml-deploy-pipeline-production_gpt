@@ -1,0 +1,9 @@
+
+onnx
+onnxconverter-common
+onnxruntime
+numpy
+pyyaml
+torch
+tensorflow
+ultralytics

@@ -1,0 +1,9 @@
+
+name: Raspberry Pi
+format: tflite
+quantization: static_int8
+graph_optimization: true
+graph_optimization_level: all
+pruning_enabled: true
+pruning_ratio: 0.2
+calibration_config_path: configs/calibration.yaml

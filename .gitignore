@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.pyc
+
+output/
+reports/
+converted/
+
+input/calibration/
+
+*.onnx
+*.pt
+*.pth

@@ -1,0 +1,103 @@
+rules:
+  - id: reject_huge_tiny_target
+    architectures: ["*"]
+    hardware: ["esp32", "tinyml"]
+    when:
+      tinyml_huge_model_rejection: true
+    recommendation: reject
+    optimizations: []
+    rejected_optimizations: ["dynamic_int8", "fp16", "tensorrt", "tflite_micro"]
+    priority: 100
+    reason: "Estimated memory footprint exceeds the target microcontroller budget."
+    next_steps:
+      - "Use a smaller architecture."
+      - "Apply distillation and structured pruning before export."
+
+  - id: tiny_model_esp32
+    architectures: ["TinyML-compatible", "CNN", "Unknown"]
+    hardware: ["esp32", "tinyml"]
+    when:
+      tinyml_suitable: true
+    recommendation: tinyml
+    optimizations: ["static_int8", "pruning", "tflite_micro"]
+    rejected_optimizations: ["dynamic_int8", "fp16", "tensorrt"]
+    priority: 95
+    reason: "Small simple graph fits TinyML heuristics and should use TFLite Micro."
+
+  - id: yolo_cnn_raspberry_pi
+    architectures: ["CNN"]
+    hardware: ["raspberry_pi"]
+    characteristics: ["Conv-heavy"]
+    recommendation: static_int8
+    optimizations: ["static_int8", "pruning", "tflite"]
+    rejected_optimizations: ["dynamic_int8", "fp16", "tensorrt"]
+    priority: 90
+    reason: "Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights."
+
+  - id: transformer_cpu
+    architectures: ["Transformer"]
+    hardware: ["cpu"]
+    characteristics: ["MatMul-heavy"]
+    recommendation: dynamic_int8
+    optimizations: ["dynamic_int8", "graph"]
+    rejected_optimizations: ["fp16", "tensorrt", "tflite_micro"]
+    priority: 85
+    reason: "Transformer graphs are MatMul/Linear-heavy, which matches ONNX Runtime dynamic INT8 support on CPU."
+
+  - id: cnn_jetson
+    architectures: ["CNN"]
+    hardware: ["jetson"]
+    characteristics: ["Conv-heavy"]
+    recommendation: fp16
+    optimizations: ["fp16", "tensorrt", "graph"]
+    rejected_optimizations: ["dynamic_int8", "tflite_micro"]
+    priority: 85
+    reason: "Jetson provides GPU/TensorRT acceleration, making FP16 a strong default for CNN inference."
+
+  - id: android_cnn
+    architectures: ["CNN"]
+    hardware: ["android", "edge_ai"]
+    characteristics: ["Conv-heavy"]
+    recommendation: static_int8
+    optimizations: ["static_int8", "tflite", "graph"]
+    rejected_optimizations: ["dynamic_int8", "tensorrt"]
+    priority: 75
+    reason: "Mobile and edge accelerator deployments generally prefer calibrated INT8 and TFLite packaging."
+
+  - id: linear_cpu_default
+    architectures: ["Unknown", "RNN", "Transformer"]
+    hardware: ["cpu"]
+    characteristics: ["Linear-heavy", "MatMul-heavy"]
+    recommendation: dynamic_int8
+    optimizations: ["dynamic_int8", "graph"]
+    rejected_optimizations: ["fp16", "tflite_micro"]
+    priority: 60
+    reason: "CPU target with MatMul/Linear-heavy graph is a good fit for dynamic INT8."
+
+  - id: fp16_gpu_default
+    architectures: ["CNN", "Transformer", "Unknown"]
+    hardware: ["jetson", "edge_ai", "android"]
+    recommendation: fp16
+    optimizations: ["fp16", "graph"]
+    rejected_optimizations: ["tflite_micro"]
+    priority: 40
+    reason: "GPU-capable hardware can often use FP16 when a more specific rule does not apply."
+
+  - id: generic_cpu_fallback
+    architectures: ["*"]
+    hardware: ["cpu"]
+    recommendation: dynamic_int8
+    optimizations: ["dynamic_int8", "graph"]
+    rejected_optimizations: ["fp16", "tensorrt", "tflite_micro"]
+    priority: 10
+    reason: "Generic CPU fallback keeps the existing ONNX Runtime dynamic INT8 workflow."
+
+  - id: generic_fallback
+    architectures: ["*"]
+    hardware: ["*"]
+    recommendation: graph
+    optimizations: ["graph"]
+    rejected_optimizations: []
+    priority: 1
+    reason: "No specific architecture/hardware rule matched; preserve ONNX graph optimization and reporting."
+

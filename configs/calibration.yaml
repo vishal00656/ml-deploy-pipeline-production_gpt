@@ -1,0 +1,21 @@
+calibration_image_path: input/calibration
+image_size: [640, 640]
+normalize: true
+mean: [0.0, 0.0, 0.0]
+std: [1.0, 1.0, 1.0]
+scale: 255.0
+color_mode: RGB
+layout: auto
+calibration_sample_limit: 64
+batch_size: 1
+quant_format: QDQ
+activation_type: QUInt8
+weight_type: QInt8
+per_channel: true
+reduce_range: false
+calibrate_method: MinMax
+op_types_to_quantize:
+  - Conv
+  - MatMul
+  - Gemm
+

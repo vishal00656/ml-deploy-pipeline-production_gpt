@@ -1,0 +1,1660 @@
+2026-05-07 00:30:32,054 | INFO | Exporting PyTorch model to ONNX: tmp_export_test\tiny.pt -> tmp_export_test\tiny.onnx
+2026-05-07 00:30:32,109 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:30:39,121 | ERROR | PyTorch to ONNX export failed: 'charmap' codec can't encode character '\u2705' in position 91: character maps to <undefined>
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 60, in export
+    torch.onnx.export(
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\__init__.py", line 291, in export
+    return _compat.export_compat(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\_internal\exporter\_compat.py", line 161, in export_compat
+    onnx_program = _core.export(
+                   ^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\_internal\exporter\_flags.py", line 27, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\_internal\exporter\_core.py", line 1376, in export
+    result = strategy(model, args, kwargs, dynamic_shapes=dynamic_shapes)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\_internal\exporter\_capture_strategies.py", line 129, in __call__
+    self._success(model)
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\_internal\exporter\_capture_strategies.py", line 253, in _success
+    self._verbose_print(
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\onnx\_internal\exporter\_capture_strategies.py", line 31, in <lambda>
+    return lambda *args, **kwargs: print("[torch.onnx]", *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 91: character maps to <undefined>
+2026-05-07 00:30:51,550 | INFO | Exporting PyTorch model to ONNX: tmp_export_test\tiny.pt -> tmp_export_test\tiny.onnx
+2026-05-07 00:30:51,566 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:30:51,829 | INFO | PyTorch ONNX export completed: tmp_export_test\tiny.onnx
+2026-05-07 00:30:58,555 | INFO | Detected framework: pytorch
+2026-05-07 00:30:58,555 | INFO | Exporting PyTorch model to ONNX: tmp_converter_test\tiny.pt -> converted\model.onnx
+2026-05-07 00:30:58,578 | ERROR | PyTorch to ONNX export failed: mat1 and mat2 shapes cannot be multiplied (1x150528 and 12x3)
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 49, in export
+    output_names = self._infer_output_names(torch, model, dummy_input)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 137, in _infer_output_names
+    outputs = model(dummy_input)
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\container.py", line 253, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (1x150528 and 12x3)
+2026-05-07 00:31:08,014 | INFO | Detected framework: pytorch
+2026-05-07 00:31:08,014 | INFO | Exporting PyTorch model to ONNX: tmp_converter_test\tiny.pt -> converted\model.onnx
+2026-05-07 00:31:08,043 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 00:31:08,235 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 00:31:28,193 | INFO | Detected framework: pytorch
+2026-05-07 00:31:28,193 | INFO | Exporting PyTorch model to ONNX: tmp_converter_test\tiny.pt -> converted\model.onnx
+2026-05-07 00:31:28,213 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 00:31:28,444 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 00:33:53,354 | INFO | Exporting PyTorch model to ONNX: tmp_quant_test\linear.pt -> tmp_quant_test\linear.onnx
+2026-05-07 00:33:53,375 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:33:53,533 | INFO | PyTorch ONNX export completed: tmp_quant_test\linear.onnx
+2026-05-07 00:33:53,533 | INFO | Optimizing model for target: Test Edge
+2026-05-07 00:33:53,533 | INFO | Quantization strategy: int8
+2026-05-07 00:33:54,377 | INFO | Running ONNX Runtime dynamic INT8 quantization: tmp_quant_test\linear.onnx -> output\linear_int8.onnx
+2026-05-07 00:33:54,412 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:33:54,517 | INFO | Quantization parameters for tensor:"/0/Flatten_output_0" not specified
+2026-05-07 00:33:54,523 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:33:54,526 | INFO | INT8 quantization completed: 0.19 MB -> 0.05 MB (73.79% compression)
+2026-05-07 00:33:54,526 | INFO | Optimization pipeline completed
+2026-05-07 00:34:20,078 | INFO | Exporting PyTorch model to ONNX: tmp_quant_test\linear.pt -> tmp_quant_test\linear.onnx
+2026-05-07 00:34:20,096 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:34:20,242 | INFO | PyTorch ONNX export completed: tmp_quant_test\linear.onnx
+2026-05-07 00:34:20,242 | INFO | Optimizing model for target: Test Edge
+2026-05-07 00:34:20,242 | INFO | Quantization strategy: int8
+2026-05-07 00:34:20,989 | INFO | Running ONNX Runtime dynamic INT8 quantization: tmp_quant_test\linear.onnx -> output\linear_int8.onnx
+2026-05-07 00:34:21,005 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:34:21,063 | INFO | Quantization parameters for tensor:"/0/Flatten_output_0" not specified
+2026-05-07 00:34:21,065 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:34:21,088 | INFO | INT8 quantization completed: 0.19 MB -> 0.05 MB (73.79% compression)
+2026-05-07 00:34:21,088 | INFO | Optimization pipeline completed
+2026-05-07 00:38:33,820 | INFO | Exporting PyTorch model to ONNX: tmp_fp16_test\linear.pt -> tmp_fp16_test\linear.onnx
+2026-05-07 00:38:33,839 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:38:33,997 | INFO | PyTorch ONNX export completed: tmp_fp16_test\linear.onnx
+2026-05-07 00:38:33,998 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 00:38:33,998 | INFO | Quantization strategy: fp16
+2026-05-07 00:38:33,999 | INFO | Running ONNX FP16 conversion: tmp_fp16_test\linear.onnx -> output\linear_fp16.onnx
+2026-05-07 00:38:34,124 | INFO | FP16 ONNX conversion completed: output\linear_fp16.onnx
+2026-05-07 00:38:34,126 | INFO | FP16 optimization completed: 0.19 MB -> 0.10 MB (49.66% compression)
+2026-05-07 00:38:34,126 | INFO | Optimization pipeline completed
+2026-05-07 00:38:42,696 | INFO | Exporting PyTorch model to ONNX: tmp_int8_regression_test\linear.pt -> tmp_int8_regression_test\linear.onnx
+2026-05-07 00:38:42,712 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:38:42,869 | INFO | PyTorch ONNX export completed: tmp_int8_regression_test\linear.onnx
+2026-05-07 00:38:42,870 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 00:38:42,870 | INFO | Quantization strategy: int8
+2026-05-07 00:38:43,612 | INFO | Running ONNX Runtime dynamic INT8 quantization: tmp_int8_regression_test\linear.onnx -> output\linear_int8.onnx
+2026-05-07 00:38:43,616 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:38:43,687 | INFO | Quantization parameters for tensor:"/0/Flatten_output_0" not specified
+2026-05-07 00:38:43,688 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:38:43,710 | INFO | INT8 optimization completed: 0.19 MB -> 0.05 MB (73.79% compression)
+2026-05-07 00:38:43,710 | INFO | Optimization pipeline completed
+2026-05-07 00:41:03,078 | INFO | Exporting PyTorch model to ONNX: tmp_bench_int8_test\linear.pt -> tmp_bench_int8_test\linear.onnx
+2026-05-07 00:41:03,228 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:41:03,481 | INFO | PyTorch ONNX export completed: tmp_bench_int8_test\linear.onnx
+2026-05-07 00:41:03,481 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 00:41:03,481 | INFO | Quantization strategy: int8
+2026-05-07 00:41:04,565 | INFO | Running ONNX Runtime dynamic INT8 quantization: tmp_bench_int8_test\linear.onnx -> output\linear_int8.onnx
+2026-05-07 00:41:04,587 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:41:04,663 | INFO | Quantization parameters for tensor:"/0/Flatten_output_0" not specified
+2026-05-07 00:41:04,669 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:41:04,695 | INFO | Benchmarking ONNX model latency: tmp_bench_int8_test\linear.onnx
+2026-05-07 00:41:04,784 | INFO | Benchmark completed for tmp_bench_int8_test\linear.onnx: avg 0.0190 ms, throughput 52748.18 infer/sec
+2026-05-07 00:41:04,785 | INFO | Benchmarking ONNX model latency: output\linear_int8.onnx
+2026-05-07 00:41:04,790 | INFO | Benchmark completed for output\linear_int8.onnx: avg 0.0225 ms, throughput 44373.45 infer/sec
+2026-05-07 00:41:04,795 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:41:04,798 | INFO | INT8 optimization completed: 0.19 MB -> 0.05 MB (73.79% compression)
+2026-05-07 00:41:04,798 | INFO | Optimization pipeline completed
+2026-05-07 00:41:12,370 | INFO | Exporting PyTorch model to ONNX: tmp_bench_fp16_test\linear.pt -> tmp_bench_fp16_test\linear.onnx
+2026-05-07 00:41:12,455 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:41:12,603 | INFO | PyTorch ONNX export completed: tmp_bench_fp16_test\linear.onnx
+2026-05-07 00:41:12,603 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 00:41:12,603 | INFO | Quantization strategy: fp16
+2026-05-07 00:41:12,604 | INFO | Running ONNX FP16 conversion: tmp_bench_fp16_test\linear.onnx -> output\linear_fp16.onnx
+2026-05-07 00:41:12,700 | INFO | FP16 ONNX conversion completed: output\linear_fp16.onnx
+2026-05-07 00:41:12,700 | INFO | Benchmarking ONNX model latency: tmp_bench_fp16_test\linear.onnx
+2026-05-07 00:41:12,818 | INFO | Benchmark completed for tmp_bench_fp16_test\linear.onnx: avg 0.0252 ms, throughput 39748.79 infer/sec
+2026-05-07 00:41:12,819 | INFO | Benchmarking ONNX model latency: output\linear_fp16.onnx
+2026-05-07 00:41:12,825 | INFO | Benchmark completed for output\linear_fp16.onnx: avg 0.0217 ms, throughput 46095.69 infer/sec
+2026-05-07 00:41:12,828 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:41:12,833 | INFO | FP16 optimization completed: 0.19 MB -> 0.10 MB (49.66% compression)
+2026-05-07 00:41:12,833 | INFO | Optimization pipeline completed
+2026-05-07 00:47:11,310 | INFO | Exporting PyTorch model to ONNX: tmp_accuracy_int8_test\linear.pt -> tmp_accuracy_int8_test\linear.onnx
+2026-05-07 00:47:11,452 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:47:11,679 | INFO | PyTorch ONNX export completed: tmp_accuracy_int8_test\linear.onnx
+2026-05-07 00:47:11,679 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 00:47:11,679 | INFO | Quantization strategy: int8
+2026-05-07 00:47:13,589 | INFO | Running ONNX Runtime dynamic INT8 quantization: tmp_accuracy_int8_test\linear.onnx -> output\linear_int8.onnx
+2026-05-07 00:47:13,617 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:47:13,698 | INFO | Quantization parameters for tensor:"/0/Flatten_output_0" not specified
+2026-05-07 00:47:13,711 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:47:13,746 | INFO | Benchmarking ONNX model latency: tmp_accuracy_int8_test\linear.onnx
+2026-05-07 00:47:13,885 | INFO | Benchmark completed for tmp_accuracy_int8_test\linear.onnx: avg 0.0309 ms, throughput 32333.16 infer/sec
+2026-05-07 00:47:13,886 | INFO | Benchmarking ONNX model latency: output\linear_int8.onnx
+2026-05-07 00:47:13,896 | INFO | Benchmark completed for output\linear_int8.onnx: avg 0.0263 ms, throughput 37985.26 infer/sec
+2026-05-07 00:47:13,899 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:47:13,900 | INFO | Validating ONNX inference accuracy: tmp_accuracy_int8_test\linear.onnx vs output\linear_int8.onnx
+2026-05-07 00:47:13,908 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 00:47:13,909 | INFO | Accuracy validation completed: MAE 0.00566544, MSE 0.00004008, cosine 0.99697335
+2026-05-07 00:47:13,923 | INFO | INT8 optimization completed: 0.19 MB -> 0.05 MB (73.79% compression)
+2026-05-07 00:47:13,923 | INFO | Optimization pipeline completed
+2026-05-07 00:47:22,979 | INFO | Exporting PyTorch model to ONNX: tmp_accuracy_fp16_test\linear.pt -> tmp_accuracy_fp16_test\linear.onnx
+2026-05-07 00:47:23,090 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:47:23,271 | INFO | PyTorch ONNX export completed: tmp_accuracy_fp16_test\linear.onnx
+2026-05-07 00:47:23,271 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 00:47:23,271 | INFO | Quantization strategy: fp16
+2026-05-07 00:47:23,272 | INFO | Running ONNX FP16 conversion: tmp_accuracy_fp16_test\linear.onnx -> output\linear_fp16.onnx
+2026-05-07 00:47:23,395 | INFO | FP16 ONNX conversion completed: output\linear_fp16.onnx
+2026-05-07 00:47:23,395 | INFO | Benchmarking ONNX model latency: tmp_accuracy_fp16_test\linear.onnx
+2026-05-07 00:47:23,513 | INFO | Benchmark completed for tmp_accuracy_fp16_test\linear.onnx: avg 0.0181 ms, throughput 55321.97 infer/sec
+2026-05-07 00:47:23,514 | INFO | Benchmarking ONNX model latency: output\linear_fp16.onnx
+2026-05-07 00:47:23,519 | INFO | Benchmark completed for output\linear_fp16.onnx: avg 0.0212 ms, throughput 47076.55 infer/sec
+2026-05-07 00:47:23,521 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:47:23,521 | INFO | Validating ONNX inference accuracy: tmp_accuracy_fp16_test\linear.onnx vs output\linear_fp16.onnx
+2026-05-07 00:47:23,528 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 00:47:23,528 | INFO | Accuracy validation completed: MAE 0.00005229, MSE 0.00000000, cosine 0.99999996
+2026-05-07 00:47:23,532 | INFO | FP16 optimization completed: 0.19 MB -> 0.10 MB (49.66% compression)
+2026-05-07 00:47:23,533 | INFO | Optimization pipeline completed
+2026-05-07 00:50:48,077 | INFO | Exporting PyTorch model to ONNX: tmp_graph_int8_test\linear.pt -> tmp_graph_int8_test\linear.onnx
+2026-05-07 00:50:48,194 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:50:48,448 | INFO | PyTorch ONNX export completed: tmp_graph_int8_test\linear.onnx
+2026-05-07 00:50:48,448 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 00:50:48,448 | INFO | Quantization strategy: int8
+2026-05-07 00:50:48,451 | INFO | Running ONNX graph optimization: tmp_graph_int8_test\linear.onnx -> output\linear_graph_optimized.onnx
+2026-05-07 00:50:48,633 | INFO | Graph optimization completed: 4 -> 3 nodes, 25.00% node reduction
+2026-05-07 00:50:49,330 | INFO | Running ONNX Runtime dynamic INT8 quantization: output\linear_graph_optimized.onnx -> output\linear_int8.onnx
+2026-05-07 00:50:49,356 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:50:49,398 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:50:49,407 | ERROR | Optimization pipeline failed: Unable to find data type for weight_name='output_MatMul'. shape_inference failed to return a type probably this node is from a different domain or using an input produced by such an operator. This may happen if you quantize a model already quantized. You may use extra_options `DefaultTensorType` to indicate the default weight type, usually `onnx.TensorProto.FLOAT`.
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 62, in optimize
+    graph_stats = backend["optimizer"](precision_input_model, optimized_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 207, in _quantize_dynamic_int8
+    quantize_dynamic(
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\onnxruntime\quantization\quantize.py", line 892, in quantize_dynamic
+    quantizer.quantize_model()
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\onnxruntime\quantization\onnx_quantizer.py", line 212, in quantize_model
+    op_quantizer.quantize()
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\onnxruntime\quantization\operators\matmul.py", line 78, in quantize
+    otype = self.quantizer.get_tensor_type(node.output[0], mandatory=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\onnxruntime\quantization\onnx_quantizer.py", line 272, in get_tensor_type
+    return self._get_default_tensor_type(tensor_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\visha\AppData\Local\Programs\Python\Python311\Lib\site-packages\onnxruntime\quantization\onnx_quantizer.py", line 251, in _get_default_tensor_type
+    raise RuntimeError(
+RuntimeError: Unable to find data type for weight_name='output_MatMul'. shape_inference failed to return a type probably this node is from a different domain or using an input produced by such an operator. This may happen if you quantize a model already quantized. You may use extra_options `DefaultTensorType` to indicate the default weight type, usually `onnx.TensorProto.FLOAT`.
+2026-05-07 00:51:04,369 | INFO | Exporting PyTorch model to ONNX: tmp_graph_int8_test\linear.pt -> tmp_graph_int8_test\linear.onnx
+2026-05-07 00:51:04,452 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:51:04,604 | INFO | PyTorch ONNX export completed: tmp_graph_int8_test\linear.onnx
+2026-05-07 00:51:04,604 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 00:51:04,604 | INFO | Quantization strategy: int8
+2026-05-07 00:51:04,605 | INFO | Running ONNX graph optimization: tmp_graph_int8_test\linear.onnx -> output\linear_graph_optimized.onnx
+2026-05-07 00:51:04,762 | INFO | Graph optimization completed: 4 -> 3 nodes, 25.00% node reduction
+2026-05-07 00:51:05,366 | INFO | Running ONNX Runtime dynamic INT8 quantization: output\linear_graph_optimized.onnx -> output\linear_int8.onnx
+2026-05-07 00:51:05,397 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 00:51:05,437 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 00:51:05,437 | INFO | get_tensor_type returns DefaultTensorType for tensor name 'output_MatMul', use 1
+2026-05-07 00:51:05,469 | INFO | Benchmarking ONNX model latency: tmp_graph_int8_test\linear.onnx
+2026-05-07 00:51:05,500 | INFO | Benchmark completed for tmp_graph_int8_test\linear.onnx: avg 0.0187 ms, throughput 53607.81 infer/sec
+2026-05-07 00:51:05,500 | INFO | Benchmarking ONNX model latency: output\linear_int8.onnx
+2026-05-07 00:51:05,508 | INFO | Benchmark completed for output\linear_int8.onnx: avg 0.0250 ms, throughput 40019.21 infer/sec
+2026-05-07 00:51:05,513 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:51:05,513 | INFO | Validating ONNX inference accuracy: tmp_graph_int8_test\linear.onnx vs output\linear_int8.onnx
+2026-05-07 00:51:05,520 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 00:51:05,520 | INFO | Accuracy validation completed: MAE 0.00289000, MSE 0.00004345, cosine 0.99869172
+2026-05-07 00:51:05,524 | INFO | INT8 optimization completed: 0.19 MB -> 0.19 MB (0.45% compression)
+2026-05-07 00:51:05,525 | INFO | Optimization pipeline completed
+2026-05-07 00:51:13,986 | INFO | Exporting PyTorch model to ONNX: tmp_graph_fp16_test\linear.pt -> tmp_graph_fp16_test\linear.onnx
+2026-05-07 00:51:14,082 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:51:14,248 | INFO | PyTorch ONNX export completed: tmp_graph_fp16_test\linear.onnx
+2026-05-07 00:51:14,248 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 00:51:14,248 | INFO | Quantization strategy: fp16
+2026-05-07 00:51:14,249 | INFO | Running ONNX graph optimization: tmp_graph_fp16_test\linear.onnx -> output\linear_graph_optimized.onnx
+2026-05-07 00:51:14,415 | INFO | Graph optimization completed: 4 -> 3 nodes, 25.00% node reduction
+2026-05-07 00:51:14,416 | INFO | Running ONNX FP16 conversion: output\linear_graph_optimized.onnx -> output\linear_fp16.onnx
+2026-05-07 00:51:14,469 | INFO | FP16 ONNX conversion completed: output\linear_fp16.onnx
+2026-05-07 00:51:14,471 | INFO | Benchmarking ONNX model latency: tmp_graph_fp16_test\linear.onnx
+2026-05-07 00:51:14,491 | INFO | Benchmark completed for tmp_graph_fp16_test\linear.onnx: avg 0.0218 ms, throughput 45955.88 infer/sec
+2026-05-07 00:51:14,492 | INFO | Benchmarking ONNX model latency: output\linear_fp16.onnx
+2026-05-07 00:51:14,496 | INFO | Benchmark completed for output\linear_fp16.onnx: avg 0.0202 ms, throughput 49603.18 infer/sec
+2026-05-07 00:51:14,497 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:51:14,497 | INFO | Validating ONNX inference accuracy: tmp_graph_fp16_test\linear.onnx vs output\linear_fp16.onnx
+2026-05-07 00:51:14,504 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 00:51:14,504 | INFO | Accuracy validation completed: MAE 0.00003758, MSE 0.00000000, cosine 0.99999996
+2026-05-07 00:51:14,508 | INFO | FP16 optimization completed: 0.19 MB -> 0.10 MB (49.58% compression)
+2026-05-07 00:51:14,508 | INFO | Optimization pipeline completed
+2026-05-07 00:51:24,096 | INFO | Exporting PyTorch model to ONNX: tmp_graph_disabled_test\linear.pt -> tmp_graph_disabled_test\linear.onnx
+2026-05-07 00:51:24,169 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 00:51:24,313 | INFO | PyTorch ONNX export completed: tmp_graph_disabled_test\linear.onnx
+2026-05-07 00:51:24,314 | INFO | Optimizing model for target: No Graph Opt
+2026-05-07 00:51:24,314 | INFO | Quantization strategy: fp16
+2026-05-07 00:51:24,315 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 00:51:24,315 | INFO | Running ONNX FP16 conversion: tmp_graph_disabled_test\linear.onnx -> output\linear_fp16.onnx
+2026-05-07 00:51:24,405 | INFO | FP16 ONNX conversion completed: output\linear_fp16.onnx
+2026-05-07 00:51:24,405 | INFO | Benchmarking ONNX model latency: tmp_graph_disabled_test\linear.onnx
+2026-05-07 00:51:24,519 | INFO | Benchmark completed for tmp_graph_disabled_test\linear.onnx: avg 0.0133 ms, throughput 75233.23 infer/sec
+2026-05-07 00:51:24,520 | INFO | Benchmarking ONNX model latency: output\linear_fp16.onnx
+2026-05-07 00:51:24,524 | INFO | Benchmark completed for output\linear_fp16.onnx: avg 0.0213 ms, throughput 46855.97 infer/sec
+2026-05-07 00:51:24,526 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:51:24,526 | INFO | Validating ONNX inference accuracy: tmp_graph_disabled_test\linear.onnx vs output\linear_fp16.onnx
+2026-05-07 00:51:24,531 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 00:51:24,531 | INFO | Accuracy validation completed: MAE 0.00006292, MSE 0.00000000, cosine 0.99999996
+2026-05-07 00:51:24,535 | INFO | FP16 optimization completed: 0.02 MB -> 0.01 MB (48.01% compression)
+2026-05-07 00:51:24,535 | INFO | Optimization pipeline completed
+2026-05-07 00:53:22,735 | INFO | Detected framework: pytorch
+2026-05-07 00:53:22,736 | INFO | Running PyTorch structured pruning: tmp_prune_convert_test\tiny.pt -> output\tiny_pruned.pt, ratio 0.2500
+2026-05-07 00:53:22,770 | INFO | Pruning statistics report written: reports\pruning_statistics.json
+2026-05-07 00:53:22,770 | INFO | Structured pruning completed: 23.85% sparsity, 23.85% estimated compression improvement
+2026-05-07 00:53:22,770 | INFO | Exporting PyTorch model to ONNX: output\tiny_pruned.pt -> converted\model.onnx
+2026-05-07 00:53:22,817 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 00:53:22,995 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 00:53:34,055 | INFO | Detected framework: pytorch
+2026-05-07 00:53:34,055 | INFO | Running PyTorch structured pruning: tmp_prune_pipeline_test\tiny.pt -> output\tiny_pruned.pt, ratio 0.2500
+2026-05-07 00:53:34,077 | INFO | Pruning statistics report written: reports\pruning_statistics.json
+2026-05-07 00:53:34,077 | INFO | Structured pruning completed: 23.85% sparsity, 23.85% estimated compression improvement
+2026-05-07 00:53:34,077 | INFO | Exporting PyTorch model to ONNX: output\tiny_pruned.pt -> converted\model.onnx
+2026-05-07 00:53:34,185 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 00:53:34,379 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 00:53:34,380 | INFO | Optimizing model for target: Pruned Edge
+2026-05-07 00:53:34,380 | INFO | Quantization strategy: fp16
+2026-05-07 00:53:34,381 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 00:53:34,382 | INFO | Running ONNX FP16 conversion: converted\model.onnx -> output\model_fp16.onnx
+2026-05-07 00:53:34,493 | INFO | FP16 ONNX conversion completed: output\model_fp16.onnx
+2026-05-07 00:53:34,493 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 00:53:34,617 | INFO | Benchmark completed for converted\model.onnx: avg 0.2132 ms, throughput 4689.64 infer/sec
+2026-05-07 00:53:34,618 | INFO | Benchmarking ONNX model latency: output\model_fp16.onnx
+2026-05-07 00:53:34,637 | INFO | Benchmark completed for output\model_fp16.onnx: avg 0.2419 ms, throughput 4134.11 infer/sec
+2026-05-07 00:53:34,639 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 00:53:34,639 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_fp16.onnx
+2026-05-07 00:53:34,649 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 00:53:34,649 | INFO | Accuracy validation completed: MAE 0.00003113, MSE 0.00000000, cosine 0.99999998
+2026-05-07 00:53:34,653 | INFO | FP16 optimization completed: 0.00 MB -> 0.00 MB (1.85% compression)
+2026-05-07 00:53:34,654 | INFO | Optimization pipeline completed
+2026-05-07 00:59:30,532 | INFO | Starting universal ML deployment pipeline
+2026-05-07 00:59:30,532 | INFO | Detected framework: pytorch
+2026-05-07 00:59:30,532 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 00:59:30,532 | INFO | Exporting PyTorch model to ONNX: input\yolov5m.pt -> converted\model.onnx
+2026-05-07 00:59:35,207 | ERROR | PyTorch to ONNX export failed: No module named 'models.yolo'
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 45, in export
+    model = self._load_model(torch, model_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 119, in _load_model
+    artifact = torch.load(
+               ^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 1579, in load
+    return _load(
+           ^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2190, in _load
+    result = unpickler.load()
+             ^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2179, in find_class
+    return super().find_class(mod_name, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'models.yolo'
+2026-05-07 01:03:19,120 | INFO | Exporting PyTorch model to ONNX: tmp_generic_loader_test\generic.pt -> tmp_generic_loader_test\generic.onnx
+2026-05-07 01:03:19,136 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:03:19,168 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:03:19,428 | INFO | PyTorch ONNX export completed: tmp_generic_loader_test\generic.onnx
+2026-05-07 01:03:30,534 | INFO | Exporting PyTorch model to ONNX: tmp_ultralytics_fallback_test\yolov8n.pt -> tmp_ultralytics_fallback_test\yolo_fake.onnx
+2026-05-07 01:03:30,534 | WARNING | Standard torch.load model loading failed for tmp_ultralytics_fallback_test\yolov8n.pt: forced standard load failure
+2026-05-07 01:03:30,534 | INFO | Trying Ultralytics loader fallback for tmp_ultralytics_fallback_test\yolov8n.pt
+2026-05-07 01:03:30,534 | INFO | Loaded YOLO/Ultralytics checkpoint with Ultralytics APIs
+2026-05-07 01:03:30,550 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:03:30,744 | INFO | PyTorch ONNX export completed: tmp_ultralytics_fallback_test\yolo_fake.onnx
+2026-05-07 01:07:17,155 | INFO | Starting universal ML deployment pipeline
+2026-05-07 01:07:17,155 | INFO | Detected framework: pytorch
+2026-05-07 01:07:17,155 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 01:07:17,155 | INFO | Exporting PyTorch model to ONNX: input\yolov5m.pt -> converted\model.onnx
+2026-05-07 01:07:20,510 | WARNING | Standard torch.load model loading failed for input\yolov5m.pt: No module named 'models.yolo'
+2026-05-07 01:07:20,511 | INFO | Trying Ultralytics loader fallback for input\yolov5m.pt
+2026-05-07 01:07:29,644 | ERROR | PyTorch to ONNX export failed: Failed to load YOLO/Ultralytics checkpoint 'input\yolov5m.pt'
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 120, in _load_model
+    artifact = self._torch_load(torch, model_path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 156, in _torch_load
+    return torch.load(
+           ^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 1579, in load
+    return _load(
+           ^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2190, in _load
+    result = unpickler.load()
+             ^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2179, in find_class
+    return super().find_class(mod_name, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'models.yolo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\tasks.py", line 1463, in torch_safe_load
+    ckpt = torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\utils\patches.py", line 181, in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 1579, in load
+    return _load(
+           ^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2190, in _load
+    result = unpickler.load()
+             ^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2179, in find_class
+    return super().find_class(mod_name, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'models.yolo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 186, in _load_ultralytics_model
+    yolo_model = YOLO(str(model_path))
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\models\yolo\model.py", line 76, in __init__
+    super().__init__(model=model, task=task, verbose=verbose)
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\engine\model.py", line 144, in __init__
+    self._load(model, task=task)
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\engine\model.py", line 283, in _load
+    self.model, self.ckpt = load_checkpoint(weights)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\tasks.py", line 1517, in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\tasks.py", line 1489, in torch_safe_load
+    ckpt = torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\utils\patches.py", line 181, in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 1579, in load
+    return _load(
+           ^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2190, in _load
+    result = unpickler.load()
+             ^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\serialization.py", line 2179, in find_class
+    return super().find_class(mod_name, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'models.yolo'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 45, in export
+    model = self._load_model(torch, model_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 140, in _load_model
+    return self._load_ultralytics_model(torch, model_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 202, in _load_ultralytics_model
+    raise PyTorchOnnxExportError(
+convert.pytorch_to_onnx.PyTorchOnnxExportError: Failed to load YOLO/Ultralytics checkpoint 'input\yolov5m.pt'
+2026-05-07 01:11:30,469 | INFO | Starting universal ML deployment pipeline
+2026-05-07 01:11:30,469 | INFO | Detected framework: pytorch
+2026-05-07 01:11:30,469 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 01:11:30,469 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 01:11:32,711 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:11:32,750 | ERROR | PyTorch to ONNX export failed: Input type (torch.FloatTensor) and weight type (torch.HalfTensor) should be the same or input should be a MKLDNN tensor and weight is a dense tensor
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 50, in export
+    output_names = self._infer_output_names(torch, model, dummy_input)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\convert\pytorch_to_onnx.py", line 266, in _infer_output_names
+    outputs = model(dummy_input)
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\tasks.py", line 142, in forward
+    return self.predict(x, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\tasks.py", line 159, in predict
+    return self._predict_once(x, profile, visualize, embed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\tasks.py", line 181, in _predict_once
+    x = m(x)  # run
+        ^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\ultralytics\nn\modules\conv.py", line 78, in forward
+    return self.act(self.bn(self.conv(x)))
+                            ^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\conv.py", line 553, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\torch\nn\modules\conv.py", line 548, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+RuntimeError: Input type (torch.FloatTensor) and weight type (torch.HalfTensor) should be the same or input should be a MKLDNN tensor and weight is a dense tensor
+2026-05-07 01:12:55,259 | INFO | Exporting PyTorch model to ONNX: tmp_dtype_fp16_test\fp16.pt -> tmp_dtype_fp16_test\fp16.onnx
+2026-05-07 01:12:55,259 | INFO | Exporting PyTorch model to ONNX: tmp_dtype_fp32_test\fp32.pt -> tmp_dtype_fp32_test\fp32.onnx
+2026-05-07 01:12:55,276 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:12:55,276 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 01:12:55,321 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:12:55,321 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:12:55,664 | INFO | PyTorch ONNX export completed: tmp_dtype_fp16_test\fp16.onnx
+2026-05-07 01:15:38,319 | INFO | Starting universal ML deployment pipeline
+2026-05-07 01:15:38,319 | INFO | Detected framework: pytorch
+2026-05-07 01:15:38,319 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 01:15:38,319 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 01:15:41,479 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:15:41,479 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 01:15:48,986 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 01:15:57,901 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 01:15:57,906 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 01:15:57,908 | INFO | Quantization strategy: fp16
+2026-05-07 01:15:57,908 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 01:15:59,916 | INFO | Graph optimization completed: 473 -> 414 nodes, 12.47% node reduction
+2026-05-07 01:15:59,942 | INFO | Running ONNX FP16 conversion: output\model_graph_optimized.onnx -> output\model_fp16.onnx
+2026-05-07 01:16:00,445 | ERROR | FP16 ONNX optimization failed: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 32, in optimize
+    fp16_model = convert_float_to_float16(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxconverter_common\float16.py", line 220, in convert_float_to_float16
+    raise ValueError(
+ValueError: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+2026-05-07 01:16:00,461 | ERROR | Optimization pipeline failed: Failed to convert ONNX model 'output\model_graph_optimized.onnx' to FP16
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 32, in optimize
+    fp16_model = convert_float_to_float16(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxconverter_common\float16.py", line 220, in convert_float_to_float16
+    raise ValueError(
+ValueError: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 62, in optimize
+    graph_stats = backend["optimizer"](precision_input_model, optimized_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 47, in optimize
+    raise FP16OptimizationError(
+optimize.fp16_optimizer.FP16OptimizationError: Failed to convert ONNX model 'output\model_graph_optimized.onnx' to FP16
+2026-05-07 01:18:20,734 | INFO | Exporting PyTorch model to ONNX: tmp_fp16_skip_test\fp16.pt -> tmp_fp16_skip_test\fp16.onnx
+2026-05-07 01:18:20,899 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:18:20,900 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 01:18:20,935 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:18:21,269 | INFO | PyTorch ONNX export completed: tmp_fp16_skip_test\fp16.onnx
+2026-05-07 01:18:21,269 | INFO | Optimizing model for target: FP16 Skip
+2026-05-07 01:18:21,269 | INFO | Quantization strategy: fp16
+2026-05-07 01:18:21,271 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 01:18:21,271 | INFO | Running ONNX FP16 conversion: tmp_fp16_skip_test\fp16.onnx -> output\fp16_fp16.onnx
+2026-05-07 01:18:21,272 | INFO | Detected ONNX model precision before FP16 optimization: fp16
+2026-05-07 01:18:21,272 | INFO | Skipping FP16 conversion: Model already contains FP16 tensors and no FP32 initializers requiring conversion
+2026-05-07 01:18:21,276 | INFO | Benchmarking ONNX model latency: tmp_fp16_skip_test\fp16.onnx
+2026-05-07 01:18:21,561 | INFO | Benchmark completed for tmp_fp16_skip_test\fp16.onnx: avg 0.0329 ms, throughput 30404.38 infer/sec
+2026-05-07 01:18:21,562 | INFO | Benchmarking ONNX model latency: output\fp16_fp16.onnx
+2026-05-07 01:18:21,567 | INFO | Benchmark completed for output\fp16_fp16.onnx: avg 0.0252 ms, throughput 39698.30 infer/sec
+2026-05-07 01:18:21,568 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 01:18:21,568 | INFO | Validating ONNX inference accuracy: tmp_fp16_skip_test\fp16.onnx vs output\fp16_fp16.onnx
+2026-05-07 01:18:21,577 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 01:18:21,577 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 01:18:21,581 | INFO | FP16 optimization completed: 0.00 MB -> 0.00 MB (0.00% compression)
+2026-05-07 01:18:21,581 | INFO | Optimization pipeline completed
+2026-05-07 01:18:29,608 | INFO | Exporting PyTorch model to ONNX: tmp_fp16_convert_test\fp32.pt -> tmp_fp16_convert_test\fp32.onnx
+2026-05-07 01:18:29,713 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:18:29,715 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 01:18:29,726 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:18:29,910 | INFO | PyTorch ONNX export completed: tmp_fp16_convert_test\fp32.onnx
+2026-05-07 01:18:29,911 | INFO | Optimizing model for target: FP16 Convert
+2026-05-07 01:18:29,911 | INFO | Quantization strategy: fp16
+2026-05-07 01:18:29,911 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 01:18:29,913 | INFO | Running ONNX FP16 conversion: tmp_fp16_convert_test\fp32.onnx -> output\fp32_fp16.onnx
+2026-05-07 01:18:29,913 | INFO | Detected ONNX model precision before FP16 optimization: fp32
+2026-05-07 01:18:30,040 | INFO | FP16 ONNX conversion completed: output\fp32_fp16.onnx
+2026-05-07 01:18:30,040 | INFO | Benchmarking ONNX model latency: tmp_fp16_convert_test\fp32.onnx
+2026-05-07 01:18:30,142 | INFO | Benchmark completed for tmp_fp16_convert_test\fp32.onnx: avg 0.0279 ms, throughput 35901.49 infer/sec
+2026-05-07 01:18:30,142 | INFO | Benchmarking ONNX model latency: output\fp32_fp16.onnx
+2026-05-07 01:18:30,147 | INFO | Benchmark completed for output\fp32_fp16.onnx: avg 0.0284 ms, throughput 35213.75 infer/sec
+2026-05-07 01:18:30,150 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 01:18:30,150 | INFO | Validating ONNX inference accuracy: tmp_fp16_convert_test\fp32.onnx vs output\fp32_fp16.onnx
+2026-05-07 01:18:30,156 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 01:18:30,156 | INFO | Accuracy validation completed: MAE 0.00005166, MSE 0.00000000, cosine 1.00000000
+2026-05-07 01:18:30,160 | INFO | FP16 optimization completed: 0.00 MB -> 0.00 MB (-20.46% compression)
+2026-05-07 01:18:30,160 | INFO | Optimization pipeline completed
+2026-05-07 01:19:59,200 | INFO | Starting universal ML deployment pipeline
+2026-05-07 01:19:59,205 | INFO | Detected framework: pytorch
+2026-05-07 01:19:59,205 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 01:19:59,205 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 01:20:03,164 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:20:03,170 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 01:20:13,564 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 01:20:23,895 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 01:20:23,903 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 01:20:23,903 | INFO | Quantization strategy: fp16
+2026-05-07 01:20:23,905 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 01:20:26,941 | INFO | Graph optimization completed: 473 -> 414 nodes, 12.47% node reduction
+2026-05-07 01:20:26,961 | INFO | Running ONNX FP16 conversion: output\model_graph_optimized.onnx -> output\model_fp16.onnx
+2026-05-07 01:20:27,079 | INFO | Detected ONNX model precision before FP16 optimization: mixed_fp16_fp32
+2026-05-07 01:20:27,533 | ERROR | FP16 ONNX optimization failed: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 52, in optimize
+    fp16_model = convert_float_to_float16(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxconverter_common\float16.py", line 220, in convert_float_to_float16
+    raise ValueError(
+ValueError: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+2026-05-07 01:20:27,540 | ERROR | Optimization pipeline failed: Failed to convert ONNX model 'output\model_graph_optimized.onnx' to FP16
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 52, in optimize
+    fp16_model = convert_float_to_float16(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxconverter_common\float16.py", line 220, in convert_float_to_float16
+    raise ValueError(
+ValueError: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 62, in optimize
+    graph_stats = backend["optimizer"](precision_input_model, optimized_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 70, in optimize
+    raise FP16OptimizationError(
+optimize.fp16_optimizer.FP16OptimizationError: Failed to convert ONNX model 'output\model_graph_optimized.onnx' to FP16
+2026-05-07 01:22:19,455 | INFO | Starting universal ML deployment pipeline
+2026-05-07 01:22:19,455 | INFO | Detected framework: pytorch
+2026-05-07 01:22:19,455 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 01:22:19,455 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 01:22:22,347 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:22:22,347 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 01:22:29,635 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 01:22:38,262 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 01:22:38,267 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 01:22:38,267 | INFO | Quantization strategy: fp16
+2026-05-07 01:22:38,269 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 01:22:40,698 | INFO | Graph optimization completed: 473 -> 414 nodes, 12.47% node reduction
+2026-05-07 01:22:40,714 | INFO | Running ONNX FP16 conversion: output\model_graph_optimized.onnx -> output\model_fp16.onnx
+2026-05-07 01:22:40,796 | INFO | Detected ONNX model precision before FP16 optimization: mixed_fp16_fp32
+2026-05-07 01:22:41,130 | ERROR | FP16 ONNX optimization failed: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 52, in optimize
+    fp16_model = convert_float_to_float16(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxconverter_common\float16.py", line 220, in convert_float_to_float16
+    raise ValueError(
+ValueError: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+2026-05-07 01:22:41,130 | ERROR | Optimization pipeline failed: Failed to convert ONNX model 'output\model_graph_optimized.onnx' to FP16
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 52, in optimize
+    fp16_model = convert_float_to_float16(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxconverter_common\float16.py", line 220, in convert_float_to_float16
+    raise ValueError(
+ValueError: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 62, in optimize
+    graph_stats = backend["optimizer"](precision_input_model, optimized_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\fp16_optimizer.py", line 70, in optimize
+    raise FP16OptimizationError(
+optimize.fp16_optimizer.FP16OptimizationError: Failed to convert ONNX model 'output\model_graph_optimized.onnx' to FP16
+2026-05-07 01:25:00,035 | INFO | Exporting PyTorch model to ONNX: tmp_fp16_ready_skip_test\fp16.pt -> tmp_fp16_ready_skip_test\fp16.onnx
+2026-05-07 01:25:00,206 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:25:00,207 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 01:25:00,237 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:25:00,515 | INFO | PyTorch ONNX export completed: tmp_fp16_ready_skip_test\fp16.onnx
+2026-05-07 01:25:00,515 | INFO | Optimizing model for target: FP16 Ready
+2026-05-07 01:25:00,515 | INFO | Quantization strategy: fp16
+2026-05-07 01:25:00,516 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 01:25:00,516 | INFO | Running ONNX FP16 conversion: tmp_fp16_ready_skip_test\fp16.onnx -> output\fp16_fp16.onnx
+2026-05-07 01:25:00,517 | INFO | Detected ONNX model precision before FP16 optimization: fp16
+2026-05-07 01:25:00,517 | INFO | Skipping FP16 conversion: Model contains majority FP16 tensors; redundant FP16 conversion skipped
+2026-05-07 01:25:00,520 | INFO | Benchmarking ONNX model latency: tmp_fp16_ready_skip_test\fp16.onnx
+2026-05-07 01:25:00,779 | INFO | Benchmark completed for tmp_fp16_ready_skip_test\fp16.onnx: avg 0.0284 ms, throughput 35223.67 infer/sec
+2026-05-07 01:25:00,781 | INFO | Benchmarking ONNX model latency: output\fp16_fp16.onnx
+2026-05-07 01:25:00,785 | INFO | Benchmark completed for output\fp16_fp16.onnx: avg 0.0257 ms, throughput 38910.51 infer/sec
+2026-05-07 01:25:00,787 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 01:25:00,787 | INFO | Validating ONNX inference accuracy: tmp_fp16_ready_skip_test\fp16.onnx vs output\fp16_fp16.onnx
+2026-05-07 01:25:00,796 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 01:25:00,796 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 01:25:00,800 | INFO | FP16 optimization completed: 0.00 MB -> 0.00 MB (0.00% compression)
+2026-05-07 01:25:00,800 | INFO | Optimization pipeline completed
+2026-05-07 01:25:08,871 | INFO | Exporting PyTorch model to ONNX: tmp_fp32_convert_still_test\fp32.pt -> tmp_fp32_convert_still_test\fp32.onnx
+2026-05-07 01:25:08,974 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:25:08,974 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 01:25:08,984 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:25:09,191 | INFO | PyTorch ONNX export completed: tmp_fp32_convert_still_test\fp32.onnx
+2026-05-07 01:25:09,191 | INFO | Optimizing model for target: FP32 Convert
+2026-05-07 01:25:09,191 | INFO | Quantization strategy: fp16
+2026-05-07 01:25:09,192 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 01:25:09,193 | INFO | Running ONNX FP16 conversion: tmp_fp32_convert_still_test\fp32.onnx -> output\fp32_fp16.onnx
+2026-05-07 01:25:09,193 | INFO | Detected ONNX model precision before FP16 optimization: fp32
+2026-05-07 01:25:09,308 | INFO | FP16 ONNX conversion completed: output\fp32_fp16.onnx
+2026-05-07 01:25:09,309 | INFO | Benchmarking ONNX model latency: tmp_fp32_convert_still_test\fp32.onnx
+2026-05-07 01:25:09,409 | INFO | Benchmark completed for tmp_fp32_convert_still_test\fp32.onnx: avg 0.0220 ms, throughput 45409.13 infer/sec
+2026-05-07 01:25:09,409 | INFO | Benchmarking ONNX model latency: output\fp32_fp16.onnx
+2026-05-07 01:25:09,414 | INFO | Benchmark completed for output\fp32_fp16.onnx: avg 0.0235 ms, throughput 42527.86 infer/sec
+2026-05-07 01:25:09,416 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 01:25:09,416 | INFO | Validating ONNX inference accuracy: tmp_fp32_convert_still_test\fp32.onnx vs output\fp32_fp16.onnx
+2026-05-07 01:25:09,423 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 01:25:09,423 | INFO | Accuracy validation completed: MAE 0.00001137, MSE 0.00000000, cosine 1.00000000
+2026-05-07 01:25:09,425 | INFO | FP16 optimization completed: 0.00 MB -> 0.00 MB (-20.46% compression)
+2026-05-07 01:25:09,425 | INFO | Optimization pipeline completed
+2026-05-07 01:25:16,832 | INFO | Exporting PyTorch model to ONNX: tmp_fp16_error_fallback_test\fp32.pt -> tmp_fp16_error_fallback_test\fp32.onnx
+2026-05-07 01:25:16,927 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:25:16,929 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 01:25:16,929 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 01:25:17,100 | INFO | PyTorch ONNX export completed: tmp_fp16_error_fallback_test\fp32.onnx
+2026-05-07 01:25:17,100 | INFO | Running ONNX FP16 conversion: tmp_fp16_error_fallback_test\fp32.onnx -> tmp_fp16_error_fallback_test\fallback.onnx
+2026-05-07 01:25:17,100 | INFO | Detected ONNX model precision before FP16 optimization: fp32
+2026-05-07 01:25:17,100 | INFO | Skipping FP16 conversion: Converter reported model is already FP16-ready: The model is already converted to float16
+2026-05-07 01:25:17,103 | WARNING | FP16 graph validated, but no FP16 initializers were found. The source model may not contain convertible float weights.
+2026-05-07 01:26:16,172 | INFO | Starting universal ML deployment pipeline
+2026-05-07 01:26:16,172 | INFO | Detected framework: pytorch
+2026-05-07 01:26:16,172 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 01:26:16,172 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 01:26:18,784 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 01:26:18,792 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 01:26:26,272 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 01:26:35,371 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 01:26:35,384 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 01:26:35,384 | INFO | Quantization strategy: fp16
+2026-05-07 01:26:35,440 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 01:26:36,930 | INFO | Graph optimization completed: 473 -> 414 nodes, 12.47% node reduction
+2026-05-07 01:26:36,949 | INFO | Running ONNX FP16 conversion: output\model_graph_optimized.onnx -> output\model_fp16.onnx
+2026-05-07 01:26:37,039 | INFO | Detected ONNX model precision before FP16 optimization: mixed_fp16_fp32
+2026-05-07 01:26:37,425 | INFO | Skipping FP16 conversion: Converter reported model is already FP16-ready: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+2026-05-07 01:26:38,313 | WARNING | FP16 graph validated, but no FP16 initializers were found. The source model may not contain convertible float weights.
+2026-05-07 01:26:38,347 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 01:26:40,644 | INFO | Benchmark completed for converted\model.onnx: avg 30.9078 ms, throughput 32.35 infer/sec
+2026-05-07 01:26:40,665 | INFO | Benchmarking ONNX model latency: output\model_fp16.onnx
+2026-05-07 01:26:42,407 | INFO | Benchmark completed for output\model_fp16.onnx: avg 27.8537 ms, throughput 35.90 infer/sec
+2026-05-07 01:26:42,424 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 01:26:42,424 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_fp16.onnx
+2026-05-07 01:26:43,171 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 01:26:43,171 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 01:26:43,202 | INFO | FP16 optimization completed: 49.45 MB -> 98.86 MB (-99.90% compression)
+2026-05-07 01:26:43,203 | INFO | Optimization pipeline completed
+2026-05-07 01:26:43,203 | INFO | Validation report: {'model': 'output\\model_fp16.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 01:26:43,203 | INFO | Pipeline completed successfully
+2026-05-07 15:56:42,174 | INFO | Starting universal ML deployment pipeline
+2026-05-07 15:56:42,186 | INFO | Detected framework: pytorch
+2026-05-07 15:56:42,188 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 15:56:42,188 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 15:56:49,425 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 15:56:49,425 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 15:56:58,837 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 15:57:10,331 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 15:57:10,339 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 15:57:10,339 | INFO | Quantization strategy: fp16
+2026-05-07 15:57:10,340 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 15:57:14,194 | INFO | Graph optimization completed: 473 -> 414 nodes, 12.47% node reduction
+2026-05-07 15:57:14,231 | INFO | Running ONNX FP16 conversion: output\model_graph_optimized.onnx -> output\model_fp16.onnx
+2026-05-07 15:57:14,348 | INFO | Detected ONNX model precision before FP16 optimization: mixed_fp16_fp32
+2026-05-07 15:57:14,863 | INFO | Skipping FP16 conversion: Converter reported model is already FP16-ready: The model is already converted to float16, if convert again, the model might be wrong. 
+ If you are sure to convert again, please set check_fp16_ready=False.
+2026-05-07 15:57:15,950 | WARNING | FP16 graph validated, but no FP16 initializers were found. The source model may not contain convertible float weights.
+2026-05-07 15:57:15,985 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 15:57:19,208 | INFO | Benchmark completed for converted\model.onnx: avg 36.5201 ms, throughput 27.38 infer/sec
+2026-05-07 15:57:19,236 | INFO | Benchmarking ONNX model latency: output\model_fp16.onnx
+2026-05-07 15:57:21,657 | INFO | Benchmark completed for output\model_fp16.onnx: avg 39.8423 ms, throughput 25.10 infer/sec
+2026-05-07 15:57:21,678 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 15:57:21,679 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_fp16.onnx
+2026-05-07 15:57:22,648 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 15:57:22,648 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 15:57:22,691 | INFO | FP16 optimization completed: 49.45 MB -> 98.86 MB (-99.90% compression)
+2026-05-07 15:57:22,691 | INFO | Optimization pipeline completed
+2026-05-07 15:57:22,692 | INFO | Validation report: {'model': 'output\\model_fp16.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 15:57:22,692 | INFO | Pipeline completed successfully
+2026-05-07 16:00:50,073 | INFO | Starting universal ML deployment pipeline
+2026-05-07 16:00:50,085 | INFO | Detected framework: pytorch
+2026-05-07 16:00:50,085 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 16:00:50,087 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 16:00:53,239 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 16:00:53,250 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 16:01:01,186 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 16:01:10,821 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 16:01:10,826 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 16:01:10,826 | INFO | Quantization strategy: int8
+2026-05-07 16:01:10,828 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 16:01:12,686 | INFO | Graph optimization completed: 473 -> 414 nodes, 12.47% node reduction
+2026-05-07 16:01:13,791 | INFO | Running ONNX Runtime dynamic INT8 quantization: output\model_graph_optimized.onnx -> output\model_int8.onnx
+2026-05-07 16:01:16,526 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 16:01:17,773 | INFO | Quantization parameters for tensor:"InsertedPrecisionFreeCast_input" not specified
+2026-05-07 16:01:17,781 | INFO | get_tensor_type returns DefaultTensorType for tensor name 'reorder_token_252', use 1
+2026-05-07 16:01:17,782 | WARNING | Failed to infer data type of tensor: 'reorder_token_253'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,783 | WARNING | Failed to infer data type of tensor: 'reorder_token_256'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,783 | WARNING | Failed to infer data type of tensor: 'reorder_token_261'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,784 | WARNING | Failed to infer data type of tensor: 'reorder_token_263'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,784 | WARNING | Failed to infer data type of tensor: 'reorder_token_268'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,784 | WARNING | Failed to infer data type of tensor: 'reorder_token_271'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,785 | WARNING | Failed to infer data type of tensor: 'reorder_token_276'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,785 | WARNING | Failed to infer data type of tensor: 'reorder_token_279'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,786 | WARNING | Failed to infer data type of tensor: 'reorder_token_282'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,787 | WARNING | Failed to infer data type of tensor: 'reorder_token_287'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,787 | WARNING | Failed to infer data type of tensor: 'reorder_token_290'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,789 | WARNING | Failed to infer data type of tensor: 'reorder_token_295'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,789 | WARNING | Failed to infer data type of tensor: 'reorder_token_298'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,789 | WARNING | Failed to infer data type of tensor: 'reorder_token_303'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,790 | WARNING | Failed to infer data type of tensor: 'reorder_token_306'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,791 | WARNING | Failed to infer data type of tensor: 'reorder_token_311'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,792 | WARNING | Failed to infer data type of tensor: 'reorder_token_314'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,792 | WARNING | Failed to infer data type of tensor: 'reorder_token_319'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,792 | WARNING | Failed to infer data type of tensor: 'reorder_token_322'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_325'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_330'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_333'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_338'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_341'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_346'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,793 | WARNING | Failed to infer data type of tensor: 'reorder_token_349'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,796 | WARNING | Failed to infer data type of tensor: 'reorder_token_354'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,796 | WARNING | Failed to infer data type of tensor: 'reorder_token_357'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_362'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_365'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_368'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_373'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_376'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_381'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_384'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_389'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_392'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_399'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_404'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_409'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_412'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_415'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_418'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_423'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_428'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_433'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_436'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_439'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_442'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,798 | WARNING | Failed to infer data type of tensor: 'reorder_token_447'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,804 | WARNING | Failed to infer data type of tensor: 'reorder_token_450'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,804 | WARNING | Failed to infer data type of tensor: 'reorder_token_454'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,804 | WARNING | Failed to infer data type of tensor: 'reorder_token_459'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,805 | WARNING | Failed to infer data type of tensor: 'reorder_token_462'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,805 | WARNING | Failed to infer data type of tensor: 'reorder_token_465'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,805 | WARNING | Failed to infer data type of tensor: 'reorder_token_468'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,806 | WARNING | Failed to infer data type of tensor: 'reorder_token_473'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,806 | WARNING | Failed to infer data type of tensor: 'reorder_token_476'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,806 | WARNING | Failed to infer data type of tensor: 'reorder_token_480'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,806 | WARNING | Failed to infer data type of tensor: 'reorder_token_485'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,807 | WARNING | Failed to infer data type of tensor: 'reorder_token_488'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,807 | WARNING | Failed to infer data type of tensor: 'reorder_token_491'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,807 | WARNING | Failed to infer data type of tensor: 'reorder_token_494'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,807 | WARNING | Failed to infer data type of tensor: 'reorder_token_499'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_502'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_505'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_508'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_476'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_513'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_516'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_450'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,808 | WARNING | Failed to infer data type of tensor: 'reorder_token_521'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,811 | WARNING | Failed to infer data type of tensor: 'reorder_token_524'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,811 | WARNING | Failed to infer data type of tensor: 'reorder_token_528'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,812 | WARNING | Failed to infer data type of tensor: 'reorder_token_502'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,812 | WARNING | Failed to infer data type of tensor: 'reorder_token_533'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,812 | WARNING | Failed to infer data type of tensor: 'reorder_token_536'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,813 | WARNING | Failed to infer data type of tensor: 'reorder_token_476'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,813 | WARNING | Failed to infer data type of tensor: 'reorder_token_541'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,813 | WARNING | Failed to infer data type of tensor: 'reorder_token_544'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,813 | WARNING | Failed to infer data type of tensor: 'reorder_token_450'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,814 | WARNING | Failed to infer data type of tensor: 'reorder_token_549'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:17,814 | WARNING | Failed to infer data type of tensor: 'reorder_token_552'. Please add data type info for this tensor if your model has customized operators.
+2026-05-07 16:01:18,788 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 16:01:21,166 | INFO | Benchmark completed for converted\model.onnx: avg 33.5824 ms, throughput 29.78 infer/sec
+2026-05-07 16:01:21,186 | INFO | Benchmarking ONNX model latency: output\model_int8.onnx
+2026-05-07 16:01:23,208 | INFO | Benchmark completed for output\model_int8.onnx: avg 32.6291 ms, throughput 30.65 infer/sec
+2026-05-07 16:01:23,233 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 16:01:23,233 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_int8.onnx
+2026-05-07 16:01:24,026 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 16:01:24,026 | INFO | Accuracy validation completed: MAE 0.58212882, MSE 5.22502745, cosine 0.81956584
+2026-05-07 16:01:24,069 | INFO | INT8 optimization completed: 49.45 MB -> 98.86 MB (-99.91% compression)
+2026-05-07 16:01:24,069 | INFO | Optimization pipeline completed
+2026-05-07 16:01:24,070 | INFO | Validation report: {'model': 'output\\model_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 16:01:24,070 | INFO | Pipeline completed successfully
+2026-05-07 16:24:56,134 | INFO | Exporting PyTorch model to ONNX: tmp_size_fp16_test\fp16.pt -> tmp_size_fp16_test\fp16.onnx
+2026-05-07 16:24:56,232 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 16:24:56,232 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 16:24:56,265 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 16:24:56,572 | INFO | PyTorch ONNX export completed: tmp_size_fp16_test\fp16.onnx
+2026-05-07 16:24:56,573 | INFO | Optimizing model for target: FP16 Size
+2026-05-07 16:24:56,573 | INFO | Quantization strategy: fp16
+2026-05-07 16:24:56,574 | INFO | Running ONNX graph optimization: tmp_size_fp16_test\fp16.onnx -> output\fp16_graph_optimized.onnx
+2026-05-07 16:24:56,772 | WARNING | Graph optimization increased graph size by 131.20%
+2026-05-07 16:24:56,778 | WARNING | Graph optimization artifact remains inflated by 121.00%; preserving original compact ONNX serialization for downstream optimization
+2026-05-07 16:24:56,781 | INFO | Graph optimization completed: 5 -> 5 nodes, 0.00% node reduction
+2026-05-07 16:24:56,783 | INFO | Running ONNX FP16 conversion: output\fp16_graph_optimized.onnx -> output\fp16_fp16.onnx
+2026-05-07 16:24:56,783 | INFO | Detected ONNX model precision before FP16 optimization: fp16
+2026-05-07 16:24:56,783 | INFO | Skipping FP16 conversion: Model contains majority FP16 tensors; redundant FP16 conversion skipped
+2026-05-07 16:24:56,788 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 16:24:56,789 | INFO | Serialized ONNX metadata overhead for original: 0.0007 MB
+2026-05-07 16:24:56,789 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.0007 MB
+2026-05-07 16:24:56,789 | INFO | Serialized ONNX metadata overhead for optimized: 0.0007 MB
+2026-05-07 16:24:56,790 | INFO | Benchmarking ONNX model latency: tmp_size_fp16_test\fp16.onnx
+2026-05-07 16:24:57,121 | INFO | Benchmark completed for tmp_size_fp16_test\fp16.onnx: avg 0.0312 ms, throughput 32102.73 infer/sec
+2026-05-07 16:24:57,123 | INFO | Benchmarking ONNX model latency: output\fp16_fp16.onnx
+2026-05-07 16:24:57,125 | INFO | Benchmark completed for output\fp16_fp16.onnx: avg 0.0322 ms, throughput 31069.41 infer/sec
+2026-05-07 16:24:57,131 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 16:24:57,132 | INFO | Validating ONNX inference accuracy: tmp_size_fp16_test\fp16.onnx vs output\fp16_fp16.onnx
+2026-05-07 16:24:57,143 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 16:24:57,143 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 16:24:57,150 | INFO | FP16 optimization completed: 0.00 MB -> 0.00 MB (0.00% compression)
+2026-05-07 16:24:57,150 | INFO | Optimization pipeline completed
+2026-05-07 16:25:06,460 | INFO | Exporting PyTorch model to ONNX: tmp_size_int8_test\fp32.pt -> tmp_size_int8_test\fp32.onnx
+2026-05-07 16:25:06,558 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 16:25:06,558 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 16:25:06,563 | INFO | Using dummy input shape (1, 3, 16, 16), opset 17, dynamic batch axes: True
+2026-05-07 16:25:06,725 | INFO | PyTorch ONNX export completed: tmp_size_int8_test\fp32.onnx
+2026-05-07 16:25:06,726 | INFO | Optimizing model for target: INT8 Size
+2026-05-07 16:25:06,726 | INFO | Quantization strategy: int8
+2026-05-07 16:25:06,728 | INFO | Running ONNX graph optimization: tmp_size_int8_test\fp32.onnx -> output\fp32_graph_optimized.onnx
+2026-05-07 16:25:06,925 | INFO | Graph optimization completed: 4 -> 3 nodes, 25.00% node reduction
+2026-05-07 16:25:07,617 | INFO | Running ONNX Runtime dynamic INT8 quantization: output\fp32_graph_optimized.onnx -> output\fp32_int8.onnx
+2026-05-07 16:25:07,653 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 16:25:07,692 | INFO | Quantization parameters for tensor:"/2/Relu_output_0" not specified
+2026-05-07 16:25:07,694 | INFO | get_tensor_type returns DefaultTensorType for tensor name 'output_MatMul', use 1
+2026-05-07 16:25:07,715 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 16:25:07,717 | INFO | Serialized ONNX metadata overhead for original: 0.0005 MB
+2026-05-07 16:25:07,717 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.0007 MB
+2026-05-07 16:25:07,717 | INFO | Serialized ONNX metadata overhead for optimized: 0.0015 MB
+2026-05-07 16:25:07,717 | INFO | Benchmarking ONNX model latency: tmp_size_int8_test\fp32.onnx
+2026-05-07 16:25:07,735 | INFO | Benchmark completed for tmp_size_int8_test\fp32.onnx: avg 0.0186 ms, throughput 53815.52 infer/sec
+2026-05-07 16:25:07,737 | INFO | Benchmarking ONNX model latency: output\fp32_int8.onnx
+2026-05-07 16:25:07,739 | INFO | Benchmark completed for output\fp32_int8.onnx: avg 0.0229 ms, throughput 43733.05 infer/sec
+2026-05-07 16:25:07,739 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 16:25:07,739 | INFO | Validating ONNX inference accuracy: tmp_size_int8_test\fp32.onnx vs output\fp32_int8.onnx
+2026-05-07 16:25:07,750 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 16:25:07,750 | INFO | Accuracy validation completed: MAE 0.00116070, MSE 0.00000619, cosine 0.99988838
+2026-05-07 16:25:07,757 | INFO | INT8 optimization completed: 0.19 MB -> 0.19 MB (0.45% compression)
+2026-05-07 16:25:07,758 | INFO | Optimization pipeline completed
+2026-05-07 16:28:02,679 | INFO | Starting universal ML deployment pipeline
+2026-05-07 16:28:02,695 | INFO | Detected framework: pytorch
+2026-05-07 16:28:02,696 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 16:28:02,696 | INFO | Exporting PyTorch model to ONNX: input\yolov8m.pt -> converted\model.onnx
+2026-05-07 16:28:07,568 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 16:28:07,574 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 16:28:15,363 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 16:28:25,232 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 16:28:25,243 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 16:28:25,243 | INFO | Quantization strategy: int8
+2026-05-07 16:28:25,243 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 16:28:28,117 | WARNING | Graph optimization increased graph size by 99.90%
+2026-05-07 16:28:29,672 | INFO | Graph optimization completed: 473 -> 599 nodes, -26.64% node reduction
+2026-05-07 16:28:30,518 | INFO | Running ONNX Runtime dynamic INT8 quantization: output\model_graph_optimized.onnx -> output\model_int8.onnx
+2026-05-07 16:28:31,276 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 16:28:32,609 | WARNING | Optimized model validated, but no dynamic quantization ops were detected. The source graph may not contain dynamically quantizable operators.
+2026-05-07 16:28:32,867 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 16:28:32,867 | INFO | Serialized ONNX metadata overhead for original: 0.0788 MB
+2026-05-07 16:28:32,867 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 16:28:32,867 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=171
+2026-05-07 16:28:32,867 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1233 MB
+2026-05-07 16:28:32,867 | WARNING | Detected duplicated initializers in optimized: 3 groups, 0.0039 MB
+2026-05-07 16:28:32,867 | WARNING | Model contains both FP32 and FP16 initializers in optimized: fp32=1 fp16=171
+2026-05-07 16:28:32,867 | INFO | Serialized ONNX metadata overhead for optimized: 0.1723 MB
+2026-05-07 16:28:32,867 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 16:28:35,056 | INFO | Benchmark completed for converted\model.onnx: avg 26.6304 ms, throughput 37.55 infer/sec
+2026-05-07 16:28:35,072 | INFO | Benchmarking ONNX model latency: output\model_int8.onnx
+2026-05-07 16:28:36,986 | INFO | Benchmark completed for output\model_int8.onnx: avg 27.2690 ms, throughput 36.67 infer/sec
+2026-05-07 16:28:37,012 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 16:28:37,013 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_int8.onnx
+2026-05-07 16:28:38,021 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 16:28:38,021 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 16:28:38,065 | INFO | INT8 optimization completed: 49.45 MB -> 49.56 MB (-0.21% compression)
+2026-05-07 16:28:38,065 | INFO | Optimization pipeline completed
+2026-05-07 16:28:38,067 | INFO | Validation report: {'model': 'output\\model_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 16:28:38,067 | INFO | Pipeline completed successfully
+2026-05-07 16:38:56,661 | INFO | Starting universal ML deployment pipeline
+2026-05-07 16:38:56,677 | INFO | Detected framework: pytorch
+2026-05-07 16:38:56,677 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 16:38:56,677 | INFO | Exporting PyTorch model to ONNX: input\yolov8x.pt -> converted\model.onnx
+2026-05-07 16:38:58,979 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 16:38:58,985 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 16:39:21,970 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 16:39:48,046 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 16:39:48,046 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 16:39:48,046 | INFO | Quantization strategy: int8
+2026-05-07 16:39:48,046 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 16:39:52,561 | WARNING | Graph optimization increased graph size by 99.96%
+2026-05-07 16:39:55,417 | INFO | Graph optimization completed: 539 -> 715 nodes, -32.65% node reduction
+2026-05-07 16:39:56,182 | INFO | Running ONNX Runtime dynamic INT8 quantization: output\model_graph_optimized.onnx -> output\model_int8.onnx
+2026-05-07 16:39:58,250 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 16:40:01,324 | WARNING | Optimized model validated, but no dynamic quantization ops were detected. The source graph may not contain dynamically quantizable operators.
+2026-05-07 16:40:02,033 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 16:40:02,033 | INFO | Serialized ONNX metadata overhead for original: 0.0906 MB
+2026-05-07 16:40:02,033 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 16:40:02,033 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 16:40:02,033 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1491 MB
+2026-05-07 16:40:02,033 | WARNING | Detected duplicated initializers in optimized: 3 groups, 0.0039 MB
+2026-05-07 16:40:02,035 | WARNING | Model contains both FP32 and FP16 initializers in optimized: fp32=1 fp16=211
+2026-05-07 16:40:02,035 | INFO | Serialized ONNX metadata overhead for optimized: 0.2086 MB
+2026-05-07 16:40:02,035 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 16:40:07,461 | INFO | Benchmark completed for converted\model.onnx: avg 80.6901 ms, throughput 12.39 infer/sec
+2026-05-07 16:40:07,490 | INFO | Benchmarking ONNX model latency: output\model_int8.onnx
+2026-05-07 16:40:12,724 | INFO | Benchmark completed for output\model_int8.onnx: avg 79.1406 ms, throughput 12.64 infer/sec
+2026-05-07 16:40:12,751 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 16:40:12,751 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_int8.onnx
+2026-05-07 16:40:14,745 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 16:40:14,745 | INFO | Accuracy validation completed: MAE 0.00102995, MSE 0.01411094, cosine 0.99994929
+2026-05-07 16:40:14,801 | INFO | INT8 optimization completed: 130.17 MB -> 130.30 MB (-0.10% compression)
+2026-05-07 16:40:14,801 | INFO | Optimization pipeline completed
+2026-05-07 16:40:14,801 | INFO | Validation report: {'model': 'output\\model_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 16:40:14,801 | INFO | Pipeline completed successfully
+2026-05-07 17:12:11,413 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:12:11,413 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:12:11,413 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:12:11,432 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:12:11,445 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:12:11,445 | INFO | Decision reason: static_int8 is recommended, but this repository currently executes graph for ONNX artifacts.
+2026-05-07 17:12:11,445 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:12:11,445 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:12:11,445 | INFO | Selected FP16 optimization for jetson deployment
+2026-05-07 17:12:11,445 | INFO | Decision reason: Jetson provides GPU/TensorRT acceleration, making FP16 a strong default for CNN inference.
+2026-05-07 17:12:11,445 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:12:11,445 | INFO | Decision reason: TensorRT export is recommended for deployment packaging.
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:12:11,445 | INFO | Selected dynamic INT8 optimization for cpu deployment
+2026-05-07 17:12:11,445 | INFO | Decision reason: Generic CPU fallback keeps the existing ONNX Runtime dynamic INT8 workflow.
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:12:11,445 | WARNING | esp32 target rejected due to estimated memory footprint 162.6935 MB
+2026-05-07 17:12:11,445 | INFO | Decision reason: Estimated memory footprint exceeds the target microcontroller budget.
+2026-05-07 17:12:11,445 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:12:11,445 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:12:17,178 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:12:17,178 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:12:17,178 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:12:17,202 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:12:17,202 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:12:17,202 | INFO | Decision reason: static_int8 is recommended, but this repository currently executes graph for ONNX artifacts.
+2026-05-07 17:12:17,202 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:12:17,202 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:12:17,202 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:12:17,202 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:12:17,202 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:12:17,202 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:12:31,567 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 17:12:31,578 | INFO | No legacy hardware YAML found for esp32; using decision-engine profile
+2026-05-07 17:12:31,956 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:12:31,956 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:12:31,956 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:12:31,973 | WARNING | esp32 target rejected due to estimated memory footprint 162.6935 MB
+2026-05-07 17:12:31,973 | INFO | Decision reason: Estimated memory footprint exceeds the target microcontroller budget.
+2026-05-07 17:12:31,973 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:12:31,973 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:12:31,973 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:12:31,973 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:12:31,973 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:12:31,975 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:20:44,574 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 17:20:44,596 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:20:44,596 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=130.5491 MB
+2026-05-07 17:20:44,596 | WARNING | Huge-model rejection detected: estimated footprint 163.1864 MB
+2026-05-07 17:20:44,596 | INFO | Selected FP16 optimization for jetson deployment
+2026-05-07 17:20:44,596 | INFO | Decision reason: Jetson provides GPU/TensorRT acceleration, making FP16 a strong default for CNN inference.
+2026-05-07 17:20:44,596 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:20:44,596 | INFO | Decision reason: TensorRT export is recommended for deployment packaging.
+2026-05-07 17:20:44,596 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:20:44,596 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:20:44,596 | INFO | Detected framework: pytorch
+2026-05-07 17:20:44,596 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 17:20:44,596 | INFO | Exporting PyTorch model to ONNX: input\yolov8x.pt -> converted\model.onnx
+2026-05-07 17:20:51,131 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 17:20:51,131 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 17:21:14,709 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 17:21:41,771 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 17:21:41,995 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:21:41,995 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:21:41,995 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:21:42,016 | INFO | Selected FP16 optimization for jetson deployment
+2026-05-07 17:21:42,016 | INFO | Decision reason: Jetson provides GPU/TensorRT acceleration, making FP16 a strong default for CNN inference.
+2026-05-07 17:21:42,016 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:21:42,016 | INFO | Decision reason: TensorRT export is recommended for deployment packaging.
+2026-05-07 17:21:42,016 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:21:42,016 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:21:42,021 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:21:42,022 | INFO | Optimizing model for target: NVIDIA Jetson
+2026-05-07 17:21:42,023 | INFO | Quantization strategy: fp16
+2026-05-07 17:21:42,026 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 17:21:46,525 | WARNING | Graph optimization increased graph size by 99.96%
+2026-05-07 17:21:49,540 | INFO | Graph optimization completed: 539 -> 715 nodes, -32.65% node reduction
+2026-05-07 17:21:49,591 | INFO | Running ONNX FP16 conversion: output\model_graph_optimized.onnx -> output\model_fp16.onnx
+2026-05-07 17:21:49,711 | INFO | Detected ONNX model precision before FP16 optimization: mixed_fp16_fp32
+2026-05-07 17:21:49,712 | INFO | Skipping FP16 conversion: Model contains majority FP16 tensors; redundant FP16 conversion skipped
+2026-05-07 17:21:52,086 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 17:21:52,086 | INFO | Serialized ONNX metadata overhead for original: 0.0906 MB
+2026-05-07 17:21:52,086 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 17:21:52,086 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 17:21:52,086 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1491 MB
+2026-05-07 17:21:52,086 | WARNING | Detected duplicated initializers in optimized: 3 groups, 0.0039 MB
+2026-05-07 17:21:52,086 | WARNING | Model contains both FP32 and FP16 initializers in optimized: fp32=1 fp16=211
+2026-05-07 17:21:52,086 | INFO | Serialized ONNX metadata overhead for optimized: 0.1491 MB
+2026-05-07 17:21:52,086 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 17:21:58,094 | INFO | Benchmark completed for converted\model.onnx: avg 86.1562 ms, throughput 11.61 infer/sec
+2026-05-07 17:21:58,127 | INFO | Benchmarking ONNX model latency: output\model_fp16.onnx
+2026-05-07 17:22:03,390 | INFO | Benchmark completed for output\model_fp16.onnx: avg 79.0439 ms, throughput 12.65 infer/sec
+2026-05-07 17:22:03,414 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 17:22:03,414 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_fp16.onnx
+2026-05-07 17:22:05,504 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 17:22:05,504 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 17:22:05,567 | INFO | FP16 optimization completed: 130.17 MB -> 130.24 MB (-0.05% compression)
+2026-05-07 17:22:05,567 | INFO | Optimization pipeline completed
+2026-05-07 17:22:05,574 | INFO | Validation report: {'model': 'output\\model_fp16.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 17:22:05,574 | INFO | Adaptive pipeline completed successfully
+2026-05-07 17:23:16,702 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 17:23:16,735 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:23:16,736 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=130.5491 MB
+2026-05-07 17:23:16,736 | WARNING | Huge-model rejection detected: estimated footprint 163.1864 MB
+2026-05-07 17:23:16,737 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:23:16,737 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:23:16,737 | INFO | Decision reason: static_int8 is recommended, but this repository currently executes graph for ONNX artifacts.
+2026-05-07 17:23:16,737 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:23:16,737 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:23:16,738 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:23:16,738 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:23:16,738 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:23:16,738 | INFO | Detected framework: pytorch
+2026-05-07 17:23:16,739 | INFO | Running PyTorch structured pruning: input\yolov8x.pt -> output\yolov8x_pruned.pt, ratio 0.2000
+2026-05-07 17:23:20,218 | INFO | Pruning statistics report written: reports\pruning_statistics.json
+2026-05-07 17:23:20,218 | INFO | Structured pruning completed: 19.98% sparsity, 19.98% estimated compression improvement
+2026-05-07 17:23:20,227 | INFO | Exporting PyTorch model to ONNX: output\yolov8x_pruned.pt -> converted\model.onnx
+2026-05-07 17:23:20,647 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 17:23:20,652 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 17:23:44,079 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 17:24:09,894 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 17:24:10,036 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:24:10,036 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:24:10,036 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:24:10,050 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:24:10,050 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:24:10,050 | INFO | Decision reason: static_int8 is recommended, but this repository currently executes graph for ONNX artifacts.
+2026-05-07 17:24:10,051 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:24:10,051 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:24:10,051 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:24:10,051 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:24:10,051 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:24:10,054 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:24:10,055 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 17:24:10,055 | INFO | Quantization strategy: graph
+2026-05-07 17:24:10,055 | INFO | Running ONNX graph optimization: converted\model.onnx -> output\model_graph_optimized.onnx
+2026-05-07 17:24:12,722 | WARNING | Graph optimization increased graph size by 99.96%
+2026-05-07 17:24:15,506 | INFO | Graph optimization completed: 539 -> 715 nodes, -32.65% node reduction
+2026-05-07 17:24:15,531 | INFO | Preserving ONNX graph-optimized artifact without precision quantization: output\model_graph_optimized.onnx -> output\model_graph.onnx
+2026-05-07 17:24:17,293 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 17:24:17,293 | INFO | Serialized ONNX metadata overhead for original: 0.0906 MB
+2026-05-07 17:24:17,293 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 17:24:17,293 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 17:24:17,293 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1490 MB
+2026-05-07 17:24:17,293 | WARNING | Detected duplicated initializers in optimized: 3 groups, 0.0039 MB
+2026-05-07 17:24:17,293 | WARNING | Model contains both FP32 and FP16 initializers in optimized: fp32=1 fp16=211
+2026-05-07 17:24:17,293 | INFO | Serialized ONNX metadata overhead for optimized: 0.1490 MB
+2026-05-07 17:24:17,293 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 17:24:22,880 | INFO | Benchmark completed for converted\model.onnx: avg 84.3475 ms, throughput 11.86 infer/sec
+2026-05-07 17:24:22,909 | INFO | Benchmarking ONNX model latency: output\model_graph.onnx
+2026-05-07 17:24:28,191 | INFO | Benchmark completed for output\model_graph.onnx: avg 80.1975 ms, throughput 12.47 infer/sec
+2026-05-07 17:24:28,206 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 17:24:28,206 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_graph.onnx
+2026-05-07 17:24:30,330 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 17:24:30,332 | INFO | Accuracy validation completed: MAE 0.00000000, MSE 0.00000000, cosine 1.00000000
+2026-05-07 17:24:30,394 | INFO | GRAPH optimization completed: 130.17 MB -> 130.24 MB (-0.05% compression)
+2026-05-07 17:24:30,394 | INFO | Optimization pipeline completed
+2026-05-07 17:24:30,394 | INFO | Validation report: {'model': 'output\\model_graph.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 17:24:30,394 | INFO | Adaptive pipeline completed successfully
+2026-05-07 17:25:26,676 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 17:25:26,691 | INFO | No legacy hardware YAML found for esp32; using decision-engine profile
+2026-05-07 17:25:26,693 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:25:26,693 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=130.5491 MB
+2026-05-07 17:25:26,693 | WARNING | Huge-model rejection detected: estimated footprint 163.1864 MB
+2026-05-07 17:25:26,693 | WARNING | esp32 target rejected due to estimated memory footprint 163.1864 MB
+2026-05-07 17:25:26,693 | INFO | Decision reason: Estimated memory footprint exceeds the target microcontroller budget.
+2026-05-07 17:25:26,694 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:25:26,694 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:25:26,694 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:25:26,694 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:25:26,694 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:25:26,695 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:25:32,530 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 17:25:32,546 | INFO | No legacy hardware YAML found for esp32; using decision-engine profile
+2026-05-07 17:25:32,546 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:25:32,546 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=130.5491 MB
+2026-05-07 17:25:32,546 | WARNING | Huge-model rejection detected: estimated footprint 163.1864 MB
+2026-05-07 17:25:32,546 | WARNING | esp32 target rejected due to estimated memory footprint 163.1864 MB
+2026-05-07 17:25:32,554 | INFO | Decision reason: Estimated memory footprint exceeds the target microcontroller budget.
+2026-05-07 17:25:32,554 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:25:32,555 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:25:32,555 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:25:32,555 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:25:32,555 | INFO | Rejected optimization strategy: tflite_micro
+2026-05-07 17:25:32,556 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:29:43,740 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:29:43,740 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:29:43,740 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:29:43,753 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:29:43,753 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:29:43,753 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:29:43,753 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:29:43,753 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:29:43,753 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:29:43,753 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:29:57,487 | INFO | Running ONNX Runtime static INT8 quantization: output\static_int8_smoke\conv.onnx -> output\static_int8_smoke\conv_static_int8.onnx
+2026-05-07 17:29:57,505 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 17:29:57,566 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 17:29:57,590 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 17:29:57,590 | INFO | Static INT8 quantization completed: quantized_ops=6, conv_quantized=1
+2026-05-07 17:30:43,365 | INFO | Optimizing model for target: Static INT8 Smoke Target
+2026-05-07 17:30:43,365 | INFO | Quantization strategy: static_int8
+2026-05-07 17:30:43,365 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 17:30:43,365 | INFO | Running ONNX Runtime static INT8 quantization: output\static_int8_smoke\conv.onnx -> output\conv_static_int8.onnx
+2026-05-07 17:30:43,371 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 17:30:43,428 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 17:30:43,428 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 17:30:43,428 | INFO | Static INT8 quantization completed: quantized_ops=6, conv_quantized=1
+2026-05-07 17:30:43,428 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 17:30:43,428 | INFO | Serialized ONNX metadata overhead for original: 0.0002 MB
+2026-05-07 17:30:43,428 | INFO | Serialized ONNX metadata overhead for optimized: 0.0013 MB
+2026-05-07 17:30:43,428 | WARNING | original_vs_optimized increased graph size by 144.77%
+2026-05-07 17:30:43,428 | INFO | Benchmarking ONNX model latency: output\static_int8_smoke\conv.onnx
+2026-05-07 17:30:43,452 | INFO | Benchmark completed for output\static_int8_smoke\conv.onnx: avg 0.0220 ms, throughput 45545.64 infer/sec
+2026-05-07 17:30:43,452 | INFO | Benchmarking ONNX model latency: output\conv_static_int8.onnx
+2026-05-07 17:30:43,468 | INFO | Benchmark completed for output\conv_static_int8.onnx: avg 0.0583 ms, throughput 17147.95 infer/sec
+2026-05-07 17:30:43,469 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 17:30:43,471 | INFO | Validating ONNX inference accuracy: output\static_int8_smoke\conv.onnx vs output\conv_static_int8.onnx
+2026-05-07 17:30:43,481 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 17:30:43,481 | INFO | Accuracy validation completed: MAE 0.12105662, MSE 0.07294560, cosine 0.99030670
+2026-05-07 17:30:43,486 | INFO | STATIC_INT8 optimization completed: 0.00 MB -> 0.00 MB (-144.77% compression)
+2026-05-07 17:30:43,487 | INFO | Optimization pipeline completed
+2026-05-07 17:52:02,486 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 17:52:02,499 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:52:02,499 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=130.5491 MB
+2026-05-07 17:52:02,499 | WARNING | Huge-model rejection detected: estimated footprint 163.1864 MB
+2026-05-07 17:52:02,499 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:52:02,499 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:52:02,502 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:52:02,502 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:52:02,502 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:52:02,502 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:52:02,502 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:52:02,503 | INFO | Detected framework: pytorch
+2026-05-07 17:52:02,504 | INFO | Running PyTorch structured pruning: input\yolov8x.pt -> output\yolov8x_pruned.pt, ratio 0.2000
+2026-05-07 17:52:04,497 | INFO | Pruning statistics report written: reports\pruning_statistics.json
+2026-05-07 17:52:04,497 | INFO | Structured pruning completed: 19.98% sparsity, 19.98% estimated compression improvement
+2026-05-07 17:52:04,497 | INFO | Exporting PyTorch model to ONNX: output\yolov8x_pruned.pt -> converted\model.onnx
+2026-05-07 17:52:04,646 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 17:52:04,646 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 17:52:28,400 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 17:52:56,738 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 17:52:56,835 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 17:52:56,851 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 17:52:56,851 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 17:52:56,851 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 17:52:56,851 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 17:52:56,851 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 17:52:56,851 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 17:52:56,851 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 17:52:56,851 | INFO | Rejected optimization strategy: fp16
+2026-05-07 17:52:56,851 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 17:52:56,867 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 17:52:56,868 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 17:52:56,868 | INFO | Quantization strategy: static_int8
+2026-05-07 17:52:56,869 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 17:52:56,873 | INFO | Running ONNX Runtime static INT8 quantization: converted\model.onnx -> output\model_static_int8.onnx
+2026-05-07 17:52:59,174 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 17:53:20,438 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 17:53:20,822 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 17:53:20,823 | INFO | Static INT8 quantization completed: quantized_ops=613, conv_quantized=104
+2026-05-07 17:53:21,411 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 17:53:21,411 | INFO | Serialized ONNX metadata overhead for original: 0.0906 MB
+2026-05-07 17:53:21,411 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 17:53:21,411 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 17:53:21,427 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1490 MB
+2026-05-07 17:53:21,427 | WARNING | Detected duplicated initializers in optimized: 65 groups, 0.1346 MB
+2026-05-07 17:53:21,427 | INFO | Serialized ONNX metadata overhead for optimized: 0.3109 MB
+2026-05-07 17:53:21,427 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 17:53:26,836 | INFO | Benchmark completed for converted\model.onnx: avg 79.6225 ms, throughput 12.56 infer/sec
+2026-05-07 17:53:26,850 | INFO | Benchmarking ONNX model latency: output\model_static_int8.onnx
+2026-05-07 17:53:26,929 | ERROR | ONNX latency benchmark failed: [ONNXRuntimeError] : 10 : INVALID_GRAPH : Load model from output\model_static_int8.onnx failed:This is an invalid model. Type Error: Type 'tensor(float16)' of input parameter (input) of operator (QuantizeLinear) in node (input_QuantizeLinear) is invalid.
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\latency_benchmark.py", line 31, in benchmark_model
+    session = self._create_session(ort, model_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\latency_benchmark.py", line 117, in _create_session
+    return ort.InferenceSession(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py", line 529, in __init__
+    self._create_inference_session(providers, provider_options, disabled_optimizers)
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py", line 624, in _create_inference_session
+    sess = C.InferenceSession(session_options, self._model_path, True, self._read_config_from_model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidGraph: [ONNXRuntimeError] : 10 : INVALID_GRAPH : Load model from output\model_static_int8.onnx failed:This is an invalid model. Type Error: Type 'tensor(float16)' of input parameter (input) of operator (QuantizeLinear) in node (input_QuantizeLinear) is invalid.
+2026-05-07 17:53:27,007 | ERROR | Optimization pipeline failed: Failed to benchmark ONNX model 'output\model_static_int8.onnx'
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\latency_benchmark.py", line 31, in benchmark_model
+    session = self._create_session(ort, model_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\latency_benchmark.py", line 117, in _create_session
+    return ort.InferenceSession(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py", line 529, in __init__
+    self._create_inference_session(providers, provider_options, disabled_optimizers)
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py", line 624, in _create_inference_session
+    sess = C.InferenceSession(session_options, self._model_path, True, self._read_config_from_model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidGraph: [ONNXRuntimeError] : 10 : INVALID_GRAPH : Load model from output\model_static_int8.onnx failed:This is an invalid model. Type Error: Type 'tensor(float16)' of input parameter (input) of operator (QuantizeLinear) in node (input_QuantizeLinear) is invalid.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 92, in optimize
+    benchmark_report = self._benchmark_models(
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 214, in _benchmark_models
+    return benchmark.benchmark_pair(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\latency_benchmark.py", line 78, in benchmark_pair
+    optimized_stats = self.benchmark_model(optimized_model)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\latency_benchmark.py", line 74, in benchmark_model
+    raise BenchmarkError(f"Failed to benchmark ONNX model '{model_path}'") from exc
+benchmark.latency_benchmark.BenchmarkError: Failed to benchmark ONNX model 'output\model_static_int8.onnx'
+2026-05-07 18:08:03,787 | INFO | Running ONNX Runtime static INT8 quantization: output\static_int8_fp16_smoke\conv_fp16.onnx -> output\static_int8_fp16_smoke\conv_static_int8.onnx
+2026-05-07 18:08:03,794 | INFO | Detected FP16 graph before static quantization
+2026-05-07 18:08:03,794 | INFO | Normalizing graph to FP32
+2026-05-07 18:08:03,893 | INFO | FP32 normalization complete
+2026-05-07 18:08:03,895 | INFO | Starting static INT8 quantization
+2026-05-07 18:08:03,899 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:03,953 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:03,984 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 18:08:03,984 | INFO | Static INT8 quantization completed: quantized_ops=6, conv_quantized=1
+2026-05-07 18:08:12,196 | INFO | Optimizing model for target: FP16 Static INT8 Smoke Target
+2026-05-07 18:08:12,196 | INFO | Quantization strategy: static_int8
+2026-05-07 18:08:12,196 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 18:08:12,196 | INFO | Running ONNX Runtime static INT8 quantization: output\static_int8_fp16_smoke\conv_fp16.onnx -> output\conv_fp16_static_int8.onnx
+2026-05-07 18:08:12,196 | INFO | Detected FP16 graph before static quantization
+2026-05-07 18:08:12,196 | INFO | Normalizing graph to FP32
+2026-05-07 18:08:12,214 | INFO | FP32 normalization complete
+2026-05-07 18:08:12,214 | INFO | Starting static INT8 quantization
+2026-05-07 18:08:12,214 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:12,261 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:12,266 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 18:08:12,266 | INFO | Static INT8 quantization completed: quantized_ops=6, conv_quantized=1
+2026-05-07 18:08:12,270 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 18:08:12,270 | INFO | Serialized ONNX metadata overhead for original: 0.0002 MB
+2026-05-07 18:08:12,270 | INFO | Serialized ONNX metadata overhead for optimized: 0.0013 MB
+2026-05-07 18:08:12,270 | WARNING | original_vs_optimized increased graph size by 273.22%
+2026-05-07 18:08:12,270 | INFO | Benchmarking ONNX model latency: output\static_int8_fp16_smoke\conv_fp16.onnx
+2026-05-07 18:08:12,296 | INFO | Benchmark completed for output\static_int8_fp16_smoke\conv_fp16.onnx: avg 0.0254 ms, throughput 39379.38 infer/sec
+2026-05-07 18:08:12,296 | INFO | Benchmarking ONNX model latency: output\conv_fp16_static_int8.onnx
+2026-05-07 18:08:12,306 | INFO | Benchmark completed for output\conv_fp16_static_int8.onnx: avg 0.0416 ms, throughput 24017.68 infer/sec
+2026-05-07 18:08:12,309 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 18:08:12,309 | INFO | Validating ONNX inference accuracy: output\static_int8_fp16_smoke\conv_fp16.onnx vs output\conv_fp16_static_int8.onnx
+2026-05-07 18:08:12,321 | ERROR | ONNX accuracy validation failed: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Unexpected input data type. Actual: (tensor(float16)) , expected: (tensor(float))
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\accuracy_validator.py", line 36, in validate_pair
+    optimized_outputs = optimized_session.run(None, inputs)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py", line 321, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Unexpected input data type. Actual: (tensor(float16)) , expected: (tensor(float))
+2026-05-07 18:08:12,339 | ERROR | Optimization pipeline failed: Failed to validate optimized ONNX inference accuracy
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\accuracy_validator.py", line 36, in validate_pair
+    optimized_outputs = optimized_session.run(None, inputs)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py", line 321, in run
+    return self._sess.run(output_names, input_feed, run_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+onnxruntime.capi.onnxruntime_pybind11_state.InvalidArgument: [ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Unexpected input data type. Actual: (tensor(float16)) , expected: (tensor(float))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 98, in optimize
+    accuracy_report = self._validate_accuracy(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\optimize\smart_optimizer.py", line 222, in _validate_accuracy
+    return validator.validate_pair(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ml-deploy-pipeline-production_gpt-main\ml-deploy-pipeline-production_gpt-main\benchmark\accuracy_validator.py", line 74, in validate_pair
+    raise AccuracyValidationError(
+benchmark.accuracy_validator.AccuracyValidationError: Failed to validate optimized ONNX inference accuracy
+2026-05-07 18:08:33,015 | INFO | Optimizing model for target: FP16 Static INT8 Smoke Target
+2026-05-07 18:08:33,015 | INFO | Quantization strategy: static_int8
+2026-05-07 18:08:33,015 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 18:08:33,015 | INFO | Running ONNX Runtime static INT8 quantization: output\static_int8_fp16_smoke\conv_fp16.onnx -> output\conv_fp16_static_int8.onnx
+2026-05-07 18:08:33,015 | INFO | Detected FP16 graph before static quantization
+2026-05-07 18:08:33,015 | INFO | Normalizing graph to FP32
+2026-05-07 18:08:33,031 | INFO | FP32 normalization complete
+2026-05-07 18:08:33,031 | INFO | Starting static INT8 quantization
+2026-05-07 18:08:33,036 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:33,078 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:33,086 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 18:08:33,086 | INFO | Static INT8 quantization completed: quantized_ops=6, conv_quantized=1
+2026-05-07 18:08:33,092 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 18:08:33,092 | INFO | Serialized ONNX metadata overhead for original: 0.0002 MB
+2026-05-07 18:08:33,092 | INFO | Serialized ONNX metadata overhead for optimized: 0.0013 MB
+2026-05-07 18:08:33,092 | WARNING | original_vs_optimized increased graph size by 273.22%
+2026-05-07 18:08:33,092 | INFO | Benchmarking ONNX model latency: output\static_int8_fp16_smoke\conv_fp16.onnx
+2026-05-07 18:08:33,112 | INFO | Benchmark completed for output\static_int8_fp16_smoke\conv_fp16.onnx: avg 0.0262 ms, throughput 38167.94 infer/sec
+2026-05-07 18:08:33,114 | INFO | Benchmarking ONNX model latency: output\conv_fp16_static_int8.onnx
+2026-05-07 18:08:33,120 | INFO | Benchmark completed for output\conv_fp16_static_int8.onnx: avg 0.0422 ms, throughput 23695.56 infer/sec
+2026-05-07 18:08:33,121 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 18:08:33,121 | INFO | Validating ONNX inference accuracy: output\static_int8_fp16_smoke\conv_fp16.onnx vs output\conv_fp16_static_int8.onnx
+2026-05-07 18:08:33,128 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 18:08:33,128 | INFO | Accuracy validation completed: MAE 0.04985842, MSE 0.01554875, cosine 0.99911790
+2026-05-07 18:08:33,133 | INFO | STATIC_INT8 optimization completed: 0.00 MB -> 0.00 MB (-273.22% compression)
+2026-05-07 18:08:33,133 | INFO | Optimization pipeline completed
+2026-05-07 18:08:59,810 | INFO | Running ONNX Runtime static INT8 quantization: output\static_int8_fp16_smoke\conv_fp16.onnx -> output\static_int8_fp16_smoke\conv_static_int8.onnx
+2026-05-07 18:08:59,811 | INFO | Detected FP16 graph before static quantization
+2026-05-07 18:08:59,811 | INFO | Normalizing graph to FP32
+2026-05-07 18:08:59,824 | INFO | FP32 normalization complete
+2026-05-07 18:08:59,824 | INFO | Starting static INT8 quantization
+2026-05-07 18:08:59,829 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:59,874 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:08:59,874 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 18:08:59,874 | INFO | Static INT8 quantization completed: quantized_ops=6, conv_quantized=1
+2026-05-07 18:43:02,641 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 18:43:02,661 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 18:43:02,661 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=130.5491 MB
+2026-05-07 18:43:02,661 | WARNING | Huge-model rejection detected: estimated footprint 163.1864 MB
+2026-05-07 18:43:02,661 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 18:43:02,661 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 18:43:02,661 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 18:43:02,661 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 18:43:02,661 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 18:43:02,661 | INFO | Rejected optimization strategy: fp16
+2026-05-07 18:43:02,661 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 18:43:02,661 | INFO | Detected framework: pytorch
+2026-05-07 18:43:02,661 | INFO | Running PyTorch structured pruning: input\yolov8x.pt -> output\yolov8x_pruned.pt, ratio 0.2000
+2026-05-07 18:43:04,436 | INFO | Pruning statistics report written: reports\pruning_statistics.json
+2026-05-07 18:43:04,436 | INFO | Structured pruning completed: 19.98% sparsity, 19.98% estimated compression improvement
+2026-05-07 18:43:04,436 | INFO | Exporting PyTorch model to ONNX: output\yolov8x_pruned.pt -> converted\model.onnx
+2026-05-07 18:43:04,606 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 18:43:04,606 | INFO | Detected PyTorch model parameter dtype: torch.float16
+2026-05-07 18:43:28,385 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 18:43:55,665 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 18:43:55,818 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 18:43:55,818 | INFO | Model statistics: params=68200608, initializers=207, nodes=539, size=130.1730 MB
+2026-05-07 18:43:55,818 | WARNING | Huge-model rejection detected: estimated footprint 162.6935 MB
+2026-05-07 18:43:55,831 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 18:43:55,832 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 18:43:55,833 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 18:43:55,833 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 18:43:55,834 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 18:43:55,834 | INFO | Rejected optimization strategy: fp16
+2026-05-07 18:43:55,834 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 18:43:55,835 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 18:43:55,835 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 18:43:55,835 | INFO | Quantization strategy: static_int8
+2026-05-07 18:43:55,840 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 18:43:55,844 | INFO | Running ONNX Runtime static INT8 quantization: converted\model.onnx -> output\model_static_int8.onnx
+2026-05-07 18:43:55,955 | INFO | Detected FP16 graph before static quantization
+2026-05-07 18:43:55,955 | INFO | Normalizing graph to FP32
+2026-05-07 18:44:01,844 | INFO | FP32 normalization complete
+2026-05-07 18:44:02,050 | INFO | Starting static INT8 quantization
+2026-05-07 18:44:06,140 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:44:26,121 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:44:27,222 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 18:44:27,222 | INFO | Static INT8 quantization completed: quantized_ops=613, conv_quantized=104
+2026-05-07 18:44:27,908 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 18:44:27,910 | INFO | Serialized ONNX metadata overhead for original: 0.0906 MB
+2026-05-07 18:44:27,910 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 18:44:27,910 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 18:44:27,910 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1490 MB
+2026-05-07 18:44:27,910 | WARNING | Detected duplicated initializers in optimized: 56 groups, 0.1346 MB
+2026-05-07 18:44:27,910 | INFO | Serialized ONNX metadata overhead for optimized: 0.3207 MB
+2026-05-07 18:44:27,910 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 18:44:33,108 | INFO | Benchmark completed for converted\model.onnx: avg 76.3840 ms, throughput 13.09 infer/sec
+2026-05-07 18:44:33,147 | INFO | Benchmarking ONNX model latency: output\model_static_int8.onnx
+2026-05-07 18:44:38,229 | INFO | Benchmark completed for output\model_static_int8.onnx: avg 83.0843 ms, throughput 12.04 infer/sec
+2026-05-07 18:44:38,230 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 18:44:38,230 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_static_int8.onnx
+2026-05-07 18:44:39,841 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 18:44:39,841 | INFO | Accuracy validation completed: MAE 0.08308146, MSE 0.07149586, cosine 0.99412136
+2026-05-07 18:44:39,898 | INFO | STATIC_INT8 optimization completed: 130.17 MB -> 65.81 MB (49.44% compression)
+2026-05-07 18:44:39,898 | INFO | Optimization pipeline completed
+2026-05-07 18:44:39,898 | INFO | Validation report: {'model': 'output\\model_static_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 18:44:39,898 | INFO | Adaptive pipeline completed successfully
+2026-05-07 18:53:54,356 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 18:53:54,369 | INFO | Detected Unknown architecture
+2026-05-07 18:53:54,369 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=97.8175 MB
+2026-05-07 18:53:54,374 | WARNING | Huge-model rejection detected: estimated footprint 122.2719 MB
+2026-05-07 18:53:54,374 | INFO | Selected graph optimization strategy
+2026-05-07 18:53:54,374 | INFO | Decision reason: No specific architecture/hardware rule matched; preserve ONNX graph optimization and reporting.
+2026-05-07 18:53:54,374 | INFO | Detected framework: pytorch
+2026-05-07 18:53:54,375 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 18:53:54,375 | INFO | Exporting PyTorch model to ONNX: input\resnet50.pt -> converted\model.onnx
+2026-05-07 18:53:56,457 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 18:53:56,463 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 18:53:56,982 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 18:54:01,229 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 18:54:01,340 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 18:54:01,340 | INFO | Model statistics: params=25530472, initializers=108, nodes=122, size=97.4144 MB
+2026-05-07 18:54:01,341 | WARNING | Huge-model rejection detected: estimated footprint 121.7621 MB
+2026-05-07 18:54:01,349 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 18:54:01,349 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 18:54:01,349 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 18:54:01,350 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 18:54:01,350 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 18:54:01,350 | INFO | Rejected optimization strategy: fp16
+2026-05-07 18:54:01,350 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 18:54:01,355 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 18:54:01,357 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 18:54:01,357 | INFO | Quantization strategy: static_int8
+2026-05-07 18:54:01,359 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 18:54:01,365 | INFO | Running ONNX Runtime static INT8 quantization: converted\model.onnx -> output\model_static_int8.onnx
+2026-05-07 18:54:01,463 | INFO | Detected FP32 graph before static quantization
+2026-05-07 18:54:02,324 | INFO | Starting static INT8 quantization
+2026-05-07 18:54:03,930 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:54:12,204 | INFO | Increased scale[181] for weight `onnx::Conv_506` by ratio 1.04207915390222 to ensure bias input `onnx::Conv_507` has a valid scale.
+2026-05-07 18:54:12,204 | INFO | Increased scale[222] for weight `onnx::Conv_506` by ratio 1.0027700871220762 to ensure bias input `onnx::Conv_507` has a valid scale.
+2026-05-07 18:54:12,205 | INFO | Increased scale[232] for weight `onnx::Conv_506` by ratio 3.0832887244124048 to ensure bias input `onnx::Conv_507` has a valid scale.
+2026-05-07 18:54:12,206 | INFO | Increased scale[181] for weight `onnx::Conv_509` by ratio 1.5053166778131757 to ensure bias input `onnx::Conv_510` has a valid scale.
+2026-05-07 18:54:12,206 | INFO | Increased scale[222] for weight `onnx::Conv_509` by ratio 2.1353279385532247 to ensure bias input `onnx::Conv_510` has a valid scale.
+2026-05-07 18:54:12,206 | INFO | Increased scale[232] for weight `onnx::Conv_509` by ratio 5.494554706743643 to ensure bias input `onnx::Conv_510` has a valid scale.
+2026-05-07 18:54:12,206 | INFO | Increased scale[2] for weight `onnx::Conv_512` by ratio 71.61578072070482 to ensure bias input `onnx::Conv_513` has a valid scale.
+2026-05-07 18:54:13,260 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 18:54:13,766 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 18:54:13,767 | INFO | Static INT8 quantization completed: quantized_ops=316, conv_quantized=53
+2026-05-07 18:54:14,555 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 18:54:14,555 | INFO | Serialized ONNX metadata overhead for original: 0.0234 MB
+2026-05-07 18:54:14,556 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 18:54:14,556 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 18:54:14,557 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1490 MB
+2026-05-07 18:54:14,557 | WARNING | Detected duplicated initializers in optimized: 22 groups, 0.1075 MB
+2026-05-07 18:54:14,557 | INFO | Serialized ONNX metadata overhead for optimized: 0.1283 MB
+2026-05-07 18:54:14,557 | WARNING | original_vs_graph_optimized increased graph size by 33.70%
+2026-05-07 18:54:14,557 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 18:54:16,940 | INFO | Benchmark completed for converted\model.onnx: avg 33.5892 ms, throughput 29.77 infer/sec
+2026-05-07 18:54:16,950 | INFO | Benchmarking ONNX model latency: output\model_static_int8.onnx
+2026-05-07 18:54:18,213 | INFO | Benchmark completed for output\model_static_int8.onnx: avg 21.1598 ms, throughput 47.26 infer/sec
+2026-05-07 18:54:18,224 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 18:54:18,224 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_static_int8.onnx
+2026-05-07 18:54:19,026 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 18:54:19,037 | INFO | Accuracy validation completed: MAE 0.08153405, MSE 0.01135855, cosine 0.99374921
+2026-05-07 18:54:19,085 | INFO | STATIC_INT8 optimization completed: 97.41 MB -> 24.90 MB (74.44% compression)
+2026-05-07 18:54:19,086 | INFO | Optimization pipeline completed
+2026-05-07 18:54:19,087 | INFO | Validation report: {'model': 'output\\model_static_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 18:54:19,087 | INFO | Adaptive pipeline completed successfully
+2026-05-07 19:47:34,859 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 19:47:34,874 | INFO | Detected Unknown architecture
+2026-05-07 19:47:34,874 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=13.6350 MB
+2026-05-07 19:47:34,874 | WARNING | Huge-model rejection detected: estimated footprint 17.0438 MB
+2026-05-07 19:47:34,874 | INFO | Selected graph optimization strategy
+2026-05-07 19:47:34,874 | INFO | Decision reason: No specific architecture/hardware rule matched; preserve ONNX graph optimization and reporting.
+2026-05-07 19:47:34,875 | INFO | Detected framework: pytorch
+2026-05-07 19:47:34,876 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 19:47:34,876 | INFO | Exporting PyTorch model to ONNX: input\mobilenetv2.pt -> converted\model.onnx
+2026-05-07 19:47:36,094 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 19:47:36,099 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 19:47:36,208 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 19:47:37,129 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 19:47:37,146 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 19:47:37,146 | INFO | Model statistics: params=3487816, initializers=106, nodes=170, size=13.3441 MB
+2026-05-07 19:47:37,146 | WARNING | Huge-model rejection detected: estimated footprint 16.6703 MB
+2026-05-07 19:47:37,148 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 19:47:37,148 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 19:47:37,148 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 19:47:37,148 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 19:47:37,148 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 19:47:37,148 | INFO | Rejected optimization strategy: fp16
+2026-05-07 19:47:37,149 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 19:47:37,150 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 19:47:37,150 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 19:47:37,151 | INFO | Quantization strategy: static_int8
+2026-05-07 19:47:37,151 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 19:47:37,153 | INFO | Running ONNX Runtime static INT8 quantization: converted\model.onnx -> output\model_static_int8.onnx
+2026-05-07 19:47:37,171 | INFO | Detected FP32 graph before static quantization
+2026-05-07 19:47:37,338 | INFO | Starting static INT8 quantization
+2026-05-07 19:47:37,544 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 19:47:40,396 | INFO | Increased scale[13] for weight `onnx::Conv_538` by ratio 3634999802.010434 to ensure bias input `onnx::Conv_539` has a valid scale.
+2026-05-07 19:47:40,396 | INFO | Increased scale[29] for weight `onnx::Conv_538` by ratio 1523016621.5745537 to ensure bias input `onnx::Conv_539` has a valid scale.
+2026-05-07 19:47:40,396 | INFO | Increased scale[13] for weight `onnx::Conv_541` by ratio 214582072.2331342 to ensure bias input `onnx::Conv_542` has a valid scale.
+2026-05-07 19:47:40,396 | INFO | Increased scale[29] for weight `onnx::Conv_541` by ratio 50676084.275612116 to ensure bias input `onnx::Conv_542` has a valid scale.
+2026-05-07 19:47:40,398 | INFO | Increased scale[82] for weight `onnx::Conv_556` by ratio 76684314.45754784 to ensure bias input `onnx::Conv_557` has a valid scale.
+2026-05-07 19:47:40,398 | INFO | Increased scale[82] for weight `onnx::Conv_559` by ratio 132786919.28696905 to ensure bias input `onnx::Conv_560` has a valid scale.
+2026-05-07 19:47:40,406 | INFO | Increased scale[88] for weight `onnx::Conv_601` by ratio 65.26178254595457 to ensure bias input `onnx::Conv_602` has a valid scale.
+2026-05-07 19:47:40,407 | INFO | Increased scale[88] for weight `onnx::Conv_604` by ratio 82.61183549424808 to ensure bias input `onnx::Conv_605` has a valid scale.
+2026-05-07 19:47:40,410 | INFO | Increased scale[328] for weight `onnx::Conv_610` by ratio 14.51698200288862 to ensure bias input `onnx::Conv_611` has a valid scale.
+2026-05-07 19:47:40,412 | INFO | Increased scale[328] for weight `onnx::Conv_613` by ratio 104.96211216770104 to ensure bias input `onnx::Conv_614` has a valid scale.
+2026-05-07 19:47:40,424 | INFO | Increased scale[394] for weight `onnx::Conv_646` by ratio 1637866.8415660292 to ensure bias input `onnx::Conv_647` has a valid scale.
+2026-05-07 19:47:40,426 | INFO | Increased scale[394] for weight `onnx::Conv_649` by ratio 3109711.333202348 to ensure bias input `onnx::Conv_650` has a valid scale.
+2026-05-07 19:47:40,432 | INFO | Increased scale[275] for weight `onnx::Conv_664` by ratio 1257.5248658089652 to ensure bias input `onnx::Conv_665` has a valid scale.
+2026-05-07 19:47:40,432 | INFO | Increased scale[340] for weight `onnx::Conv_664` by ratio 43697.83673159159 to ensure bias input `onnx::Conv_665` has a valid scale.
+2026-05-07 19:47:40,433 | INFO | Increased scale[462] for weight `onnx::Conv_664` by ratio 165636.9545890612 to ensure bias input `onnx::Conv_665` has a valid scale.
+2026-05-07 19:47:40,436 | INFO | Increased scale[275] for weight `onnx::Conv_667` by ratio 2611.3692775935683 to ensure bias input `onnx::Conv_668` has a valid scale.
+2026-05-07 19:47:40,436 | INFO | Increased scale[340] for weight `onnx::Conv_667` by ratio 5769.685661295389 to ensure bias input `onnx::Conv_668` has a valid scale.
+2026-05-07 19:47:40,437 | INFO | Increased scale[462] for weight `onnx::Conv_667` by ratio 52201.05627896607 to ensure bias input `onnx::Conv_668` has a valid scale.
+2026-05-07 19:47:40,934 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 19:47:41,084 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 19:47:41,084 | INFO | Static INT8 quantization completed: quantized_ops=304, conv_quantized=52
+2026-05-07 19:47:41,454 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 19:47:41,454 | INFO | Serialized ONNX metadata overhead for original: 0.0391 MB
+2026-05-07 19:47:41,455 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 19:47:41,455 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 19:47:41,455 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1490 MB
+2026-05-07 19:47:41,455 | WARNING | Detected duplicated initializers in optimized: 34 groups, 0.0612 MB
+2026-05-07 19:47:41,456 | INFO | Serialized ONNX metadata overhead for optimized: 0.1611 MB
+2026-05-07 19:47:41,456 | WARNING | original_vs_graph_optimized increased graph size by 876.02%
+2026-05-07 19:47:41,456 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 19:47:41,716 | INFO | Benchmark completed for converted\model.onnx: avg 3.9001 ms, throughput 256.40 infer/sec
+2026-05-07 19:47:41,720 | INFO | Benchmarking ONNX model latency: output\model_static_int8.onnx
+2026-05-07 19:47:42,127 | INFO | Benchmark completed for output\model_static_int8.onnx: avg 6.1062 ms, throughput 163.77 infer/sec
+2026-05-07 19:47:42,132 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 19:47:42,133 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_static_int8.onnx
+2026-05-07 19:47:42,261 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 19:47:42,261 | INFO | Accuracy validation completed: MAE 0.10530724, MSE 0.01799010, cosine 0.98566866
+2026-05-07 19:47:42,283 | INFO | STATIC_INT8 optimization completed: 13.34 MB -> 3.76 MB (71.80% compression)
+2026-05-07 19:47:42,284 | INFO | Optimization pipeline completed
+2026-05-07 19:47:42,284 | INFO | Validation report: {'model': 'output\\model_static_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 19:47:42,285 | INFO | Adaptive pipeline completed successfully
+2026-05-07 19:52:56,491 | INFO | Starting adaptive ML deployment optimization pipeline
+2026-05-07 19:52:56,504 | INFO | Detected Unknown architecture
+2026-05-07 19:52:56,504 | INFO | Model statistics: params=0, initializers=0, nodes=0, size=20.5095 MB
+2026-05-07 19:52:56,505 | WARNING | Huge-model rejection detected: estimated footprint 25.6369 MB
+2026-05-07 19:52:56,505 | INFO | Selected graph optimization strategy
+2026-05-07 19:52:56,505 | INFO | Decision reason: No specific architecture/hardware rule matched; preserve ONNX graph optimization and reporting.
+2026-05-07 19:52:56,505 | INFO | Detected framework: pytorch
+2026-05-07 19:52:56,506 | INFO | Structured pruning disabled for PyTorch export
+2026-05-07 19:52:56,506 | INFO | Exporting PyTorch model to ONNX: input\efficientnetb0.pt -> converted\model.onnx
+2026-05-07 19:52:57,664 | INFO | Loaded PyTorch model with standard torch.load
+2026-05-07 19:52:57,670 | INFO | Detected PyTorch model parameter dtype: torch.float32
+2026-05-07 19:52:57,790 | INFO | Using dummy input shape (1, 3, 224, 224), opset 17, dynamic batch axes: True
+2026-05-07 19:52:58,813 | INFO | PyTorch ONNX export completed: converted\model.onnx
+2026-05-07 19:52:58,834 | INFO | Detected Conv-heavy CNN architecture
+2026-05-07 19:52:58,834 | INFO | Model statistics: params=5267540, initializers=164, nodes=239, size=20.1647 MB
+2026-05-07 19:52:58,835 | WARNING | Huge-model rejection detected: estimated footprint 25.1882 MB
+2026-05-07 19:52:58,838 | INFO | Selected static INT8 quantization for raspberry_pi deployment
+2026-05-07 19:52:58,838 | INFO | Decision reason: Conv-heavy CPU deployment benefits from calibrated static INT8; dynamic INT8 mostly targets MatMul/Gemm weights.
+2026-05-07 19:52:58,838 | INFO | Decision reason: Dynamic quantization unsuitable for Conv-heavy graph because it primarily optimizes MatMul/Gemm weights.
+2026-05-07 19:52:58,838 | INFO | Decision reason: TFLite-family export is preferred for this hardware target.
+2026-05-07 19:52:58,838 | INFO | Rejected optimization strategy: dynamic_int8
+2026-05-07 19:52:58,838 | INFO | Rejected optimization strategy: fp16
+2026-05-07 19:52:58,838 | INFO | Rejected optimization strategy: tensorrt
+2026-05-07 19:52:58,840 | INFO | Optimization recommendation report written: reports\optimization_recommendation.json
+2026-05-07 19:52:58,840 | INFO | Optimizing model for target: Raspberry Pi
+2026-05-07 19:52:58,841 | INFO | Quantization strategy: static_int8
+2026-05-07 19:52:58,841 | INFO | Graph optimization disabled by hardware profile
+2026-05-07 19:52:58,844 | INFO | Running ONNX Runtime static INT8 quantization: converted\model.onnx -> output\model_static_int8.onnx
+2026-05-07 19:52:58,868 | INFO | Detected FP32 graph before static quantization
+2026-05-07 19:52:59,081 | INFO | Starting static INT8 quantization
+2026-05-07 19:52:59,356 | WARNING | Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 19:53:05,016 | WARNING | Please consider pre-processing before quantization. See https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+2026-05-07 19:53:05,241 | INFO | Static INT8 quantization report written: reports\static_int8_quantization.json
+2026-05-07 19:53:05,241 | INFO | Static INT8 quantization completed: quantized_ops=478, conv_quantized=81
+2026-05-07 19:53:05,655 | INFO | Model size analysis report written: reports\model_size_analysis.json
+2026-05-07 19:53:05,656 | INFO | Serialized ONNX metadata overhead for original: 0.0706 MB
+2026-05-07 19:53:05,656 | WARNING | Detected duplicated initializers in graph_optimized: 3 groups, 0.0039 MB
+2026-05-07 19:53:05,656 | WARNING | Model contains both FP32 and FP16 initializers in graph_optimized: fp32=1 fp16=211
+2026-05-07 19:53:05,657 | INFO | Serialized ONNX metadata overhead for graph_optimized: 0.1490 MB
+2026-05-07 19:53:05,657 | WARNING | Detected duplicated initializers in optimized: 63 groups, 0.1209 MB
+2026-05-07 19:53:05,657 | INFO | Serialized ONNX metadata overhead for optimized: 0.3035 MB
+2026-05-07 19:53:05,657 | WARNING | original_vs_graph_optimized increased graph size by 545.89%
+2026-05-07 19:53:05,657 | INFO | Benchmarking ONNX model latency: converted\model.onnx
+2026-05-07 19:53:06,171 | INFO | Benchmark completed for converted\model.onnx: avg 7.9836 ms, throughput 125.26 infer/sec
+2026-05-07 19:53:06,179 | INFO | Benchmarking ONNX model latency: output\model_static_int8.onnx
+2026-05-07 19:53:07,121 | INFO | Benchmark completed for output\model_static_int8.onnx: avg 14.5827 ms, throughput 68.57 infer/sec
+2026-05-07 19:53:07,130 | INFO | Benchmark statistics report written: reports\benchmark_statistics.json
+2026-05-07 19:53:07,130 | INFO | Validating ONNX inference accuracy: converted\model.onnx vs output\model_static_int8.onnx
+2026-05-07 19:53:07,362 | INFO | Accuracy validation report written: reports\accuracy_validation.json
+2026-05-07 19:53:07,363 | INFO | Accuracy validation completed: MAE 0.62575645, MSE 0.66225639, cosine 0.69085410
+2026-05-07 19:53:07,384 | INFO | STATIC_INT8 optimization completed: 20.16 MB -> 5.81 MB (71.21% compression)
+2026-05-07 19:53:07,384 | INFO | Optimization pipeline completed
+2026-05-07 19:53:07,385 | INFO | Validation report: {'model': 'output\\model_static_int8.onnx', 'status': 'validated', 'latency_ms': 12.4, 'memory_mb': 48}
+2026-05-07 19:53:07,386 | INFO | Adaptive pipeline completed successfully

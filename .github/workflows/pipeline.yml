@@ -1,0 +1,67 @@
+name: Universal ML Deployment Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      hardware:
+        description: "Select target hardware"
+        required: true
+        default: "raspberry_pi"
+        type: choice
+        options:
+          - raspberry_pi
+          - jetson
+          - android
+          - esp32
+          - arm_cpu
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create required directories
+        run: |
+          mkdir -p output reports artifacts converted
+
+      - name: Detect uploaded model
+        id: detect_model
+        run: |
+          MODEL=$(find input -type f \( -name "*.pt" -o -name "*.onnx" -o -name "*.h5" -o -name "*.pb" -o -name "*.keras" -o -name "*.py" \) | head -n 1)
+
+          echo "MODEL_PATH=$MODEL" >> $GITHUB_ENV
+
+          echo "Detected model:"
+          echo $MODEL
+
+      - name: Run optimization pipeline
+        run: |
+          python main.py \
+            --model ${{ env.MODEL_PATH }} \
+            --hardware ${{ github.event.inputs.hardware }}
+
+      - name: Package deployment bundle
+        run: |
+          python deploy/package.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: optimized-${{ github.event.inputs.hardware }}
+          path: |
+            output/
+            reports/
+            deployment_bundle.zip
