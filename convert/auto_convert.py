@@ -74,6 +74,7 @@ class UniversalConverter:
         )
         try:
             pruner.prune(model_path, pruned_model, report_path=report_path)
+            hardware_profile["pruned_model_path"] = str(pruned_model)
             return pruned_model
         except PruningOptimizationError as exc:
             logger.warning(

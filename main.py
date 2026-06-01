@@ -3,6 +3,7 @@ from pathlib import Path
 
 from benchmark.validator import generate_validation_report
 from convert.auto_convert import UniversalConverter
+from core.artifact_manager import cleanup_output_directory
 from core.config_manager import ConfigManager
 from core.logger import logger
 from decision_engine.hardware_capabilities import HardwareCapabilities
@@ -10,12 +11,19 @@ from decision_engine.model_analyzer import ModelAnalyzer
 from decision_engine.recommendation_report import RecommendationReporter
 from decision_engine.strategy_selector import StrategySelector
 from optimize.smart_optimizer import SmartOptimizer
+from reporting.final_report_generator import generate_final_report
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True)
     parser.add_argument("--hardware", required=True)
+    parser.add_argument(
+        "--optimization",
+        choices=["auto", "static_int8", "fp16", "dynamic_int8"],
+        default="auto",
+        help="Optional optimization override. Defaults to decision-engine auto mode.",
+    )
     return parser.parse_args()
 
 
@@ -38,13 +46,47 @@ def load_calibration_config(config):
         return {}
 
 
-def runtime_profile(hardware_profile, legacy_profile, strategy, calibration_config=None):
+def runtime_profile(
+    hardware_profile,
+    legacy_profile,
+    strategy,
+    calibration_config=None,
+    source_model_stem=None,
+):
     profile = hardware_profile.to_legacy_profile()
     profile.update(legacy_profile or {})
     profile.update(strategy.to_hardware_overrides())
     profile["calibration"] = calibration_config or {}
     profile["calibration_config_path"] = "configs/calibration.yaml"
+    if source_model_stem:
+        profile["source_model_stem"] = source_model_stem
     return profile
+
+
+def apply_user_override(strategy, optimization):
+    if not optimization or optimization == "auto":
+        logger.info("Optimization selection: auto")
+        return strategy
+
+    logger.info("Optimization override requested: %s", optimization)
+    strategy.primary_optimization = optimization
+    strategy.executable_optimization = optimization
+    strategy.optimization_pipeline = [optimization, "graph"]
+    if optimization == "static_int8":
+        strategy.deployment_recommendations = [
+            item
+            for item in strategy.deployment_recommendations
+            if item != "dynamic_int8"
+        ]
+    strategy.decision_reasons = [
+        *strategy.decision_reasons,
+        f"User override selected {optimization}; decision-engine recommendation was overridden.",
+    ]
+    strategy.rule_id = f"user_override_{optimization}"
+    strategy.feasible = True
+    if strategy.feasibility_score <= 0:
+        strategy.feasibility_score = 50.0
+    return strategy
 
 
 def main():
@@ -55,6 +97,10 @@ def main():
         raise FileNotFoundError(f"Model not found: {model_path}")
 
     logger.info("Starting adaptive ML deployment optimization pipeline")
+    logger.info("Model selection: %s", model_path)
+    logger.info("Hardware selection: %s", args.hardware)
+    logger.info("Optimization selection: %s", args.optimization)
+    cleanup_output_directory(preserve_paths=[model_path])
 
     config = ConfigManager()
     analyzer = ModelAnalyzer()
@@ -77,6 +123,7 @@ def main():
         legacy_profile,
         preliminary_strategy,
         calibration_config,
+        model_path.stem,
     )
 
     if not preliminary_strategy.feasible:
@@ -92,6 +139,7 @@ def main():
     # ONNX graph analysis is authoritative for final optimization selection.
     model_analysis = analyzer.analyze(onnx_model)
     strategy = selector.select(model_analysis, hardware_profile)
+    strategy = apply_user_override(strategy, args.optimization)
     reporter.write(model_analysis, hardware_profile, strategy)
 
     if not strategy.feasible:
@@ -101,13 +149,25 @@ def main():
         )
 
     optimizer = SmartOptimizer()
+    optimizer_profile = runtime_profile(
+        hardware_profile,
+        legacy_profile,
+        strategy,
+        calibration_config,
+        model_path.stem,
+    )
+    if conversion_profile.get("pruned_model_path"):
+        optimizer_profile["pruned_model_path"] = conversion_profile["pruned_model_path"]
+
     optimized_model = optimizer.optimize(
         onnx_model,
-        runtime_profile(hardware_profile, legacy_profile, strategy, calibration_config),
+        optimizer_profile,
     )
 
     report = generate_validation_report(optimized_model)
     logger.info(f"Validation report: {report}")
+    final_report = generate_final_report()
+    logger.info("Final execution report: %s", final_report)
     logger.info("Adaptive pipeline completed successfully")
 
 

@@ -5,5 +5,9 @@ onnxruntime
 numpy
 pyyaml
 torch
+torchvision
 tensorflow
+onnx2tf
+tf2onnx
 ultralytics
+pillow

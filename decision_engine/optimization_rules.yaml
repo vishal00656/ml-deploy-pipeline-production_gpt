@@ -54,15 +54,25 @@ rules:
     priority: 85
     reason: "Jetson provides GPU/TensorRT acceleration, making FP16 a strong default for CNN inference."
 
-  - id: android_cnn
+  - id: android_mobile_cnn
     architectures: ["CNN"]
-    hardware: ["android", "edge_ai"]
+    hardware: ["android"]
+    characteristics: ["Conv-heavy"]
+    recommendation: fp16
+    optimizations: ["fp16", "tflite", "graph"]
+    rejected_optimizations: ["dynamic_int8", "tensorrt", "tflite_micro"]
+    priority: 75
+    reason: "Android mobile CNN deployments prefer TFLite packaging, with FP16 as the default acceleration-friendly format."
+
+  - id: edge_ai_cnn
+    architectures: ["CNN"]
+    hardware: ["edge_ai"]
     characteristics: ["Conv-heavy"]
     recommendation: static_int8
     optimizations: ["static_int8", "tflite", "graph"]
     rejected_optimizations: ["dynamic_int8", "tensorrt"]
     priority: 75
-    reason: "Mobile and edge accelerator deployments generally prefer calibrated INT8 and TFLite packaging."
+    reason: "Edge accelerator deployments generally prefer calibrated INT8 and TFLite-style packaging."
 
   - id: linear_cpu_default
     architectures: ["Unknown", "RNN", "Transformer"]
@@ -100,4 +110,3 @@ rules:
     rejected_optimizations: []
     priority: 1
     reason: "No specific architecture/hardware rule matched; preserve ONNX graph optimization and reporting."
-
