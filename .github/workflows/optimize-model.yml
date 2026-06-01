@@ -1,0 +1,159 @@
+name: Optimize ML Model
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: Model to optimize
+        required: true
+        default: mobilenetv2
+        type: choice
+        options:
+          - resnet50
+          - mobilenetv2
+      hardware:
+        description: Target hardware
+        required: true
+        default: raspberry_pi
+        type: choice
+        options:
+          - raspberry_pi
+          - jetson
+          - cpu
+      optimization:
+        description: Optimization strategy
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - static_int8
+          - fp16
+          - dynamic_int8
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Create virtual environment
+        run: python -m venv .venv
+
+      - name: Install dependencies
+        run: |
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install -r requirements.txt
+
+      - name: Prepare workspace directories
+        run: |
+          mkdir -p logs output reports input input/calibration
+
+      - name: Download or generate selected model
+        run: |
+          .venv/bin/python scripts/download_model.py --model "${{ inputs.model }}"
+
+      - name: Generate calibration image samples
+        run: |
+          .venv/bin/python - <<'PY'
+          from pathlib import Path
+          import numpy as np
+          from PIL import Image
+
+          calibration_dir = Path("input/calibration")
+          calibration_dir.mkdir(parents=True, exist_ok=True)
+          existing = list(calibration_dir.glob("*.png"))
+          if existing:
+              print(f"Reusing {len(existing)} existing calibration images")
+          else:
+              for index in range(16):
+                  image = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
+                  Image.fromarray(image).save(calibration_dir / f"sample_{index:03d}.png")
+              print("Generated 16 calibration images")
+          PY
+
+      - name: Run optimization pipeline
+        env:
+          SELECTED_MODEL: ${{ inputs.model }}
+          SELECTED_HARDWARE: ${{ inputs.hardware }}
+          SELECTED_OPTIMIZATION: ${{ inputs.optimization }}
+          SKIP_FINAL_ARTIFACT_CLEANUP: "1"
+        run: |
+          set -o pipefail
+          .venv/bin/python main.py \
+            --model "input/${SELECTED_MODEL}.pt" \
+            --hardware "${SELECTED_HARDWARE}" \
+            --optimization "${SELECTED_OPTIMIZATION}" \
+            2>&1 | tee logs/workflow_execution.log
+
+      - name: Generate workflow summary
+        if: always()
+        env:
+          SELECTED_MODEL: ${{ inputs.model }}
+          SELECTED_HARDWARE: ${{ inputs.hardware }}
+          SELECTED_OPTIMIZATION: ${{ inputs.optimization }}
+        run: |
+          .venv/bin/python - <<'PY'
+          from pathlib import Path
+          import json
+          import os
+
+          summary_path = Path(os.environ["GITHUB_STEP_SUMMARY"])
+          stats_path = Path("output/optimization_stats.json")
+          final_report = Path("reports/final_execution_report.md")
+
+          stats = {}
+          if stats_path.exists():
+              try:
+                  stats = json.loads(stats_path.read_text())
+              except json.JSONDecodeError:
+                  stats = {}
+
+          status = "success" if stats.get("status") == "optimized" else "failed or incomplete"
+          lines = [
+              "# ML Optimization Workflow Summary",
+              "",
+              f"- Selected model: `{os.environ.get('SELECTED_MODEL', 'unknown')}`",
+              f"- Selected hardware: `{os.environ.get('SELECTED_HARDWARE', 'unknown')}`",
+              f"- Selected optimization: `{os.environ.get('SELECTED_OPTIMIZATION', 'unknown')}`",
+              f"- Optimization status: **{status}**",
+              f"- Original model size: `{stats.get('original_size_mb', 'not available')} MB`",
+              f"- Optimized model size: `{stats.get('optimized_size_mb', 'not available')} MB`",
+              f"- Compression percentage: `{stats.get('compression_percent', 'not available')}%`",
+              f"- Report generation status: `{'generated' if final_report.exists() else 'not generated'}`",
+              "",
+              "Download optimized models, reports, and execution logs from the workflow artifacts below.",
+          ]
+          summary_path.write_text("\n".join(lines) + "\n")
+          PY
+
+      - name: Upload optimized outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: optimized-output
+          path: output/
+          if-no-files-found: warn
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: optimization-reports
+          path: reports/
+          if-no-files-found: warn
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: execution-logs
+          path: logs/
+          if-no-files-found: warn

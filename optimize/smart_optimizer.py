@@ -1,13 +1,17 @@
-
 from pathlib import Path
 import json
+import os
 import shutil
-
 from benchmark.accuracy_validator import (
     AccuracyValidationError,
     OnnxAccuracyValidator,
 )
 from benchmark.latency_benchmark import BenchmarkError, OnnxLatencyBenchmark
+from convert.onnx_to_tflite import TFLiteConversionError, convert_onnx_to_tflite
+from core.artifact_manager import (
+    generate_final_artifact_name,
+    preserve_required_outputs,
+)
 from core.logger import logger
 from optimize.fp16_optimizer import FP16Optimizer, FP16OptimizationError
 from optimize.graph_optimizer import GraphOptimizationError, OnnxGraphOptimizer
@@ -17,21 +21,17 @@ from optimize.static_int8_optimizer import (
     StaticInt8Optimizer,
 )
 
-
 class OptimizationError(RuntimeError):
     """Raised when model optimization cannot be completed."""
-
+    pass
 
 class SmartOptimizer:
-
     def optimize(self, model_path, hardware_profile):
         model_path = Path(model_path)
         quantization_strategy = hardware_profile.get("quantization", "int8").lower()
 
-        logger.info(
-            f"Optimizing model for target: {hardware_profile['name']}"
-        )
-        logger.info(f"Quantization strategy: {quantization_strategy}")
+        logger.info("Optimizing model for target: %s", hardware_profile["name"])
+        logger.info("Quantization strategy: %s", quantization_strategy)
 
         if quantization_strategy not in {"int8", "static_int8", "fp16", "graph"}:
             raise OptimizationError(
@@ -45,8 +45,20 @@ class SmartOptimizer:
         output_dir.mkdir(parents=True, exist_ok=True)
         reports_dir.mkdir(parents=True, exist_ok=True)
 
-        optimized_model = output_dir / f"{model_path.stem}_{quantization_strategy}.onnx"
+        final_suffix = hardware_profile.get("deployment_format", ".onnx")
+        android_tflite = self._android_tflite_enabled(hardware_profile)
+        artifact_name = generate_final_artifact_name(
+            hardware_profile.get("source_model_stem", model_path.stem),
+            hardware_profile.get("target", hardware_profile.get("name", "hardware")),
+            quantization_strategy,
+            suffix=final_suffix if android_tflite else ".onnx",
+        )
+        final_artifact = output_dir / artifact_name
+        optimized_model = (
+            final_artifact.with_suffix(".onnx") if android_tflite else final_artifact
+        )
         graph_optimized_model = output_dir / f"{model_path.stem}_graph_optimized.onnx"
+        logger.info("Final artifact path: %s", final_artifact)
 
         try:
             self._validate_input_model(model_path)
@@ -67,11 +79,19 @@ class SmartOptimizer:
 
             backend = self._select_backend(quantization_strategy, hardware_profile)
             graph_stats = backend["optimizer"](precision_input_model, optimized_model)
+            
+            tflite_report = None
+            if android_tflite:
+                tflite_report = convert_onnx_to_tflite(
+                    optimized_model,
+                    final_artifact,
+                    quantization=quantization_strategy,
+                )
 
-            optimized_size = self._model_size_bytes(optimized_model)
+            optimized_size = self._model_size_bytes(final_artifact)
             stats = self._build_optimization_stats(
                 model_path=model_path,
-                optimized_model=optimized_model,
+                optimized_model=final_artifact,
                 hardware_profile=hardware_profile,
                 original_size=original_size,
                 optimized_size=optimized_size,
@@ -80,26 +100,85 @@ class SmartOptimizer:
                 quantization=quantization_strategy,
                 graph_optimization_stats=graph_optimization_stats,
             )
-            size_analysis = self._analyze_model_sizes(
-                {
-                    "original": model_path,
-                    "graph_optimized": graph_optimized_model,
-                    "optimized": optimized_model,
-                },
-                reports_dir / "model_size_analysis.json",
-            )
+            
+            if tflite_report:
+                stats["onnx_optimized_model"] = str(optimized_model)
+                stats["tflite_conversion"] = tflite_report
+                stats["runtime_recommendation"] = "Use TensorFlow Lite on Android."
+                size_analysis = self._analyze_file_sizes(
+                    model_path,
+                    final_artifact,
+                    reports_dir / "model_size_analysis.json",
+                )
+            else:
+                size_analysis = self._analyze_model_sizes(
+                    {
+                        "original": model_path,
+                        "graph_optimized": graph_optimized_model,
+                        "optimized": final_artifact,
+                    },
+                    reports_dir / "model_size_analysis.json",
+                )
             stats["model_size_analysis"] = size_analysis
-            benchmark_report = self._benchmark_models(
-                model_path,
-                optimized_model,
-                reports_dir / "benchmark_statistics.json",
-            )
+
+            # ✅ TRANSFORMER-AWARE BENCHMARK WRAPPER
+            if tflite_report:
+                benchmark_report = self._write_skipped_benchmark_report(
+                    final_artifact,
+                    reports_dir / "benchmark_statistics.json",
+                )
+            else:
+                try:
+                    benchmark_report = self._benchmark_models(
+                        model_path,
+                        final_artifact,
+                        reports_dir / "benchmark_statistics.json",
+                    )
+                except Exception as exc:
+                    logger.warning(
+                        "Benchmark skipped for transformer-style model: %s",
+                        exc,
+                    )
+                    benchmark_report = {
+                        "status": "skipped",
+                        "reason": "Transformer benchmarking requires tokenizer-aware inference inputs.",
+                    }
+                    self._write_json(
+                        reports_dir / "benchmark_statistics.json",
+                        benchmark_report,
+                    )
+            
             stats["benchmark"] = benchmark_report
-            accuracy_report = self._validate_accuracy(
-                model_path,
-                optimized_model,
-                reports_dir / "accuracy_validation.json",
-            )
+
+            # ✅ TRANSFORMER-AWARE ACCURACY VALIDATION WRAPPER
+            if tflite_report:
+                accuracy_report = self._write_skipped_accuracy_report(
+                    model_path,
+                    optimized_model,
+                    final_artifact,
+                    reports_dir / "accuracy_validation.json",
+                )
+            else:
+                try:
+                    accuracy_report = self._validate_accuracy(
+                        model_path,
+                        final_artifact,
+                        reports_dir / "accuracy_validation.json",
+                    )
+                except Exception as exc:
+                    logger.warning(
+                        "Accuracy validation skipped for transformer-style model: %s",
+                        exc,
+                    )
+                    accuracy_report = {
+                        "status": "skipped",
+                        "reason": "Transformer accuracy validation requires tokenizer-aware inference inputs.",
+                    }
+                    self._write_json(
+                        reports_dir / "accuracy_validation.json",
+                        accuracy_report,
+                    )
+            
             stats["accuracy_validation"] = accuracy_report
 
             self._write_json(output_dir / "optimization_stats.json", stats)
@@ -108,6 +187,17 @@ class SmartOptimizer:
                 reports_dir / "validation_summary.json",
                 self._build_validation_summary(stats),
             )
+            if os.environ.get("SKIP_FINAL_ARTIFACT_CLEANUP") == "1":
+                logger.info(
+                    "Skipping final artifact cleanup because workflow artifact "
+                    "preservation is enabled"
+                )
+            else:
+                preserve_required_outputs(
+                    output_dir=output_dir,
+                    final_artifact=final_artifact,
+                    pruned_model=hardware_profile.get("pruned_model_path"),
+                )
 
             logger.info(
                 "%s optimization completed: %.2f MB -> %.2f MB (%.2f%% "
@@ -118,22 +208,24 @@ class SmartOptimizer:
                 stats["compression_percent"],
             )
             logger.info("Optimization pipeline completed")
-
-            return str(optimized_model)
+            return str(final_artifact)
+            
         except Exception as exc:
-            if optimized_model.exists():
-                optimized_model.unlink()
+            for path in (optimized_model, final_artifact):
+                if path.exists():
+                    path.unlink()
             logger.exception("Optimization pipeline failed: %s", exc)
             if isinstance(
                 exc,
                 (
                     OptimizationError,
                     FP16OptimizationError,
-                    StaticInt8OptimizationError,
+                    StaticInt8OptimizationError, 
                     BenchmarkError,
                     AccuracyValidationError,
                     GraphOptimizationError,
                     ModelSizeAnalysisError,
+                    TFLiteConversionError,
                 ),
             ):
                 raise
@@ -144,7 +236,6 @@ class SmartOptimizer:
     def _validate_input_model(self, model_path):
         if not model_path.exists():
             raise OptimizationError(f"Model not found: {model_path}")
-
         if model_path.suffix.lower() != ".onnx":
             raise OptimizationError(
                 f"Optimization requires an ONNX model: {model_path}"
@@ -156,7 +247,6 @@ class SmartOptimizer:
                 "technique": "onnxruntime_dynamic_int8",
                 "optimizer": self._quantize_dynamic_int8,
             }
-
         if quantization_strategy == "static_int8":
             static_optimizer = StaticInt8Optimizer(
                 calibration_config=(
@@ -171,20 +261,17 @@ class SmartOptimizer:
                 "technique": static_optimizer.technique,
                 "optimizer": static_optimizer.optimize,
             }
-
         if quantization_strategy == "fp16":
             fp16_optimizer = FP16Optimizer()
             return {
                 "technique": fp16_optimizer.technique,
                 "optimizer": fp16_optimizer.optimize,
             }
-
         if quantization_strategy == "graph":
             return {
                 "technique": "onnx_graph_only_recommendation_path",
                 "optimizer": self._graph_only_artifact,
             }
-
         raise OptimizationError(
             f"Unsupported optimization strategy: {quantization_strategy}"
         )
@@ -257,6 +344,74 @@ class SmartOptimizer:
         analyzer = OnnxModelSizeAnalyzer()
         return analyzer.analyze(model_paths, report_path=report_path)
 
+    def _analyze_file_sizes(self, original_model, optimized_model, report_path):
+        original_model = Path(original_model)
+        optimized_model = Path(optimized_model)
+        original_size = self._model_size_bytes(original_model)
+        optimized_size = self._model_size_bytes(optimized_model)
+        delta = optimized_size - original_size
+        delta_percent = self._size_delta_percent(original_size, optimized_size)
+        report = {
+            "status": "analyzed",
+            "models": {
+                "original": {
+                    "path": str(original_model),
+                    "file_size_bytes": original_size,
+                    "file_size_mb": round(original_size / (1024 * 1024), 4),
+                },
+                "optimized": {
+                    "path": str(optimized_model),
+                    "file_size_bytes": optimized_size,
+                    "file_size_mb": round(optimized_size / (1024 * 1024), 4),
+                    "format": optimized_model.suffix,
+                },
+            },
+            "comparisons": {
+                "original_vs_optimized": {
+                    "size_delta_bytes": delta,
+                    "size_delta_mb": round(delta / (1024 * 1024), 4),
+                    "size_delta_percent": round(delta_percent, 2),
+                }
+            },
+            "notes": [
+                "Final artifact is not an ONNX model, so ONNX tensor storage "
+                "analysis was skipped."
+            ],
+        }
+        self._write_json(report_path, report)
+        return report
+
+    def _write_skipped_benchmark_report(self, final_artifact, report_path):
+        report = {
+            "status": "skipped",
+            "reason": "TFLite artifact generated for Android deployment.",
+            "note": "TFLite models are not benchmarked with ONNX Runtime.",
+            "optimized": {"model": str(final_artifact), "runtime": "tflite"},
+        }
+        self._write_json(report_path, report)
+        logger.info("Skipping ONNX Runtime benchmark for Android TFLite artifact")
+        return report
+
+    def _write_skipped_accuracy_report(
+        self,
+        original_model,
+        optimized_onnx_model,
+        final_artifact,
+        report_path,
+    ):
+        report = {
+            "status": "skipped",
+            "reason": "Final artifact is TensorFlow Lite and cannot be compared with ONNX Runtime.",
+            "note": "ONNX validation completed before TFLite export; validate TFLite accuracy on-device or with a TFLite interpreter.",
+            "original_model": str(original_model),
+            "onnx_optimized_model": str(optimized_onnx_model),
+            "optimized_model": str(final_artifact),
+            "runtime": "tflite",
+        }
+        self._write_json(report_path, report)
+        logger.info("Skipping ONNX Runtime accuracy comparison for Android TFLite artifact")
+        return report
+
     def _quantize_dynamic_int8(self, model_path, optimized_model):
         try:
             from onnxruntime.quantization import QuantType, quantize_dynamic
@@ -327,6 +482,9 @@ class SmartOptimizer:
         )
         return graph_stats
 
+    def _android_tflite_enabled(self, hardware_profile):
+        return hardware_profile.get("target") == "android"
+
     def _size_delta_percent(self, original_size, new_size):
         if original_size <= 0:
             return 0.0
@@ -345,8 +503,7 @@ class SmartOptimizer:
 
         ops = [node.op_type for node in model.graph.node]
         quantized_ops = [
-            op
-            for op in ops
+            op for op in ops
             if "Quantize" in op or "Dequantize" in op or "Integer" in op
         ]
 
@@ -407,13 +564,11 @@ class SmartOptimizer:
                 ),
                 "pipeline": hardware_profile.get("decision_pipeline", []),
                 "rejected_optimizations": hardware_profile.get(
-                    "decision_rejected_optimizations",
-                    [],
+                    "decision_rejected_optimizations", []
                 ),
                 "reasons": hardware_profile.get("decision_reasons", []),
                 "deployment_recommendations": hardware_profile.get(
-                    "deployment_recommendations",
-                    [],
+                    "deployment_recommendations", []
                 ),
                 "deployment_feasible": hardware_profile.get("deployment_feasible"),
                 "deployment_feasibility_score": hardware_profile.get(

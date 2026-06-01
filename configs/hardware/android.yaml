@@ -1,9 +1,13 @@
 
 name: Android
 format: tflite
-quantization: static_int8
+quantization: fp16
 graph_optimization: true
 graph_optimization_level: all
 pruning_enabled: false
 pruning_ratio: 0.0
 calibration_config_path: configs/calibration.yaml
+preferred_runtime: tflite
+deployment_format: .tflite
+supports_fp16: true
+supports_int8: true
