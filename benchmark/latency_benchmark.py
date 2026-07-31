@@ -28,7 +28,7 @@ class OnnxLatencyBenchmark:
             ort = self._import_onnxruntime()
             session = self._create_session(ort, model_path)
             
-            # ✅ REPLACED: Transformer-aware input generation
+            # Transformer-aware input generation
             inputs = self._generate_inputs(session)
 
             for _ in range(self.warmup_iterations):
@@ -114,7 +114,7 @@ class OnnxLatencyBenchmark:
             providers=self.providers,
         )
 
-    # ✅ NEW: Transformer-aware input generation
+    # Transformer-aware input generation
     def _generate_inputs(self, session):
         inputs = {}
         for inp in session.get_inputs():

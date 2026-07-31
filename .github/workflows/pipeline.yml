@@ -13,7 +13,9 @@ on:
           - jetson
           - android
           - esp32
-          - arm_cpu
+          - cpu
+          - edge_ai
+          - tinyml
 
 jobs:
   optimize:
@@ -41,6 +43,12 @@ jobs:
         id: detect_model
         run: |
           MODEL=$(find input -type f \( -name "*.pt" -o -name "*.onnx" -o -name "*.h5" -o -name "*.pb" -o -name "*.keras" -o -name "*.py" \) | head -n 1)
+
+          if [ -z "$MODEL" ]; then
+            echo "No supported model artifact found under input/."
+            echo "Add a .pt, .onnx, .h5, .pb, .keras, or .py model before running this workflow."
+            exit 1
+          fi
 
           echo "MODEL_PATH=$MODEL" >> $GITHUB_ENV
 

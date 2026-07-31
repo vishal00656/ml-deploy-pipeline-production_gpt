@@ -121,7 +121,7 @@ class SmartOptimizer:
                 )
             stats["model_size_analysis"] = size_analysis
 
-            # ✅ TRANSFORMER-AWARE BENCHMARK WRAPPER
+            # Transformer-aware benchmark wrapper
             if tflite_report:
                 benchmark_report = self._write_skipped_benchmark_report(
                     final_artifact,
@@ -150,7 +150,7 @@ class SmartOptimizer:
             
             stats["benchmark"] = benchmark_report
 
-            # ✅ TRANSFORMER-AWARE ACCURACY VALIDATION WRAPPER
+            # Transformer-aware accuracy validation wrapper
             if tflite_report:
                 accuracy_report = self._write_skipped_accuracy_report(
                     model_path,

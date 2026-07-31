@@ -6,6 +6,7 @@ from core.logger import logger
 
 
 ARTIFACT_SUFFIXES = {".onnx", ".tflite", ".pt", ".pth", ".json", ".md"}
+RESERVED_ARTIFACT_DOCS = {"README.md"}
 INTERMEDIATE_MARKERS = (
     ".candidate",
     ".extended_candidate",
@@ -28,6 +29,9 @@ def cleanup_output_directory(output_dir="output", preserve_paths=None):
 
     logger.info("Artifact cleanup started: %s", output_dir)
     for path in sorted(output_dir.iterdir(), key=lambda item: str(item)):
+        if path.name in RESERVED_ARTIFACT_DOCS:
+            logger.info("Preserving artifact directory documentation: %s", path)
+            continue
         if _is_preserved(path, preserve):
             logger.info("Preserving artifact during cleanup: %s", path)
             continue
@@ -53,6 +57,9 @@ def cleanup_intermediate_artifacts(
 
     logger.info("Artifact intermediate cleanup started: %s", output_dir)
     for path in sorted(output_dir.iterdir(), key=lambda item: str(item)):
+        if path.name in RESERVED_ARTIFACT_DOCS:
+            logger.info("Preserving artifact directory documentation: %s", path)
+            continue
         if _is_preserved(path, preserve):
             logger.info("Preserving final artifact: %s", path)
             continue
