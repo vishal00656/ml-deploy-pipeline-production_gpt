@@ -5,7 +5,7 @@ import shutil
 from core.logger import logger
 
 
-ARTIFACT_SUFFIXES = {".onnx", ".tflite", ".pt", ".pth", ".json"}
+ARTIFACT_SUFFIXES = {".onnx", ".tflite", ".pt", ".pth", ".json", ".md"}
 INTERMEDIATE_MARKERS = (
     ".candidate",
     ".extended_candidate",

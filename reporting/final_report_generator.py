@@ -18,15 +18,38 @@ REPORT_FILES = {
 
 def generate_final_report(
     reports_dir="reports",
-    output_path="reports/final_execution_report.md",
+    output_path="output/final_execution_report.md",
+    optimization_stats_path="output/optimization_stats.json",
 ):
-    """Generate a presentation-friendly Markdown summary of a pipeline run."""
+    """Generate a concise deployment report beside the optimized artifact."""
     reports_dir = Path(reports_dir)
     output_path = Path(output_path)
     logger.info("Generating final execution report: %s", output_path)
 
     reports = _load_reports(reports_dir)
-    lines = _build_report_lines(reports)
+    output_stats = _read_json(Path(optimization_stats_path))
+    if output_stats:
+        reports["summary"] = {**reports.get("summary", {}), **output_stats}
+
+    lines = [
+        "# Final Optimization Report",
+        "",
+        *generate_executive_summary(reports),
+        "",
+        *generate_decision_summary(reports),
+        "",
+        *generate_optimization_summary(reports),
+        "",
+        *generate_size_summary(reports),
+        "",
+        *generate_benchmark_summary(reports),
+        "",
+        *generate_accuracy_summary(reports),
+        "",
+        *generate_quantization_summary(reports),
+        "",
+        *generate_final_verdict(reports),
+    ]
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -34,11 +57,223 @@ def generate_final_report(
     return output_path
 
 
+def generate_executive_summary(reports):
+    summary = reports.get("summary", {})
+    recommendation = reports.get("recommendation", {})
+    tflite = reports.get("tflite", {}) or summary.get("tflite_conversion", {})
+    strategy = recommendation.get("recommended_optimization_strategy", {})
+    optimized_model = summary.get("optimized_model") or tflite.get("tflite_model")
+    status = "SUCCESS" if summary.get("status") == "optimized" else "FAILED"
+
+    return [
+        "## Executive Summary",
+        "",
+        f"- Input Model: {_inline(summary.get('original_model'))}",
+        f"- Optimized Model: {_inline(optimized_model)}",
+        f"- Hardware Target: {_plain(summary.get('hardware_target') or recommendation.get('hardware_target'))}",
+        f"- Optimization Selected: {_plain(summary.get('quantization') or strategy.get('primary_optimization'))}",
+        f"- Runtime Recommendation: {_plain(summary.get('runtime_recommendation') or _runtime_recommendation(tflite))}",
+        f"- Deployment Format: {_plain(_deployment_format(optimized_model, tflite))}",
+        f"- Status: **{status}**",
+    ]
+
+
+def generate_decision_summary(reports):
+    summary = reports.get("summary", {})
+    recommendation = reports.get("recommendation", {})
+    decision = summary.get("decision_engine", {})
+    strategy = recommendation.get("recommended_optimization_strategy", {})
+    selected = decision.get("primary_optimization") or strategy.get("primary_optimization")
+    rejected = decision.get("rejected_optimizations") or recommendation.get(
+        "rejected_optimization_strategies",
+        [],
+    )
+    reasons = decision.get("reasons") or recommendation.get(
+        "why_decisions_were_made",
+        [],
+    )
+
+    lines = [
+        "## Decision Engine Summary",
+        "",
+        f"- Selected Optimization: {_plain(selected)}",
+        f"- Rejected Optimizations: {_plain(_join_list(rejected))}",
+        "- Decision Reasons:",
+    ]
+    lines.extend(_bullet_lines(_limit_items(reasons, 4), "No decision reasons were available."))
+    return lines
+
+
+def generate_optimization_summary(reports):
+    summary = reports.get("summary", {})
+    static_int8 = _static_int8_report(reports)
+    pruning = reports.get("pruning", {})
+    tflite = reports.get("tflite", {}) or summary.get("tflite_conversion", {})
+    steps = []
+
+    if summary.get("graph_optimization") is not None or _pipeline_has(summary, "graph"):
+        steps.append("Graph Optimization")
+    if pruning or _pipeline_has(summary, "pruning"):
+        steps.append("Structured Pruning")
+    if static_int8.get("quantized_operator_count"):
+        steps.append("Static INT8 Quantization")
+    if summary.get("quantization") == "int8":
+        steps.append("Dynamic INT8 Quantization")
+    if summary.get("quantization") == "fp16":
+        steps.append("FP16 Conversion")
+    if tflite.get("status") == "converted":
+        steps.append("TFLite Export")
+
+    return [
+        "## Optimization Steps Applied",
+        "",
+        *_bullet_lines(_dedupe(steps), "No optimization step information was available."),
+    ]
+
+
+def generate_size_summary(reports):
+    summary = reports.get("summary", {})
+    size = reports.get("size", {}) or summary.get("model_size_analysis", {})
+    original = summary.get("original_size_mb") or _get(size, "models", "original", "file_size_mb")
+    optimized = summary.get("optimized_size_mb") or _get(size, "models", "optimized", "file_size_mb")
+    compression = summary.get("compression_percent")
+    if compression is None:
+        delta = _get(size, "comparisons", "original_vs_optimized", "size_delta_percent")
+        compression = -delta if isinstance(delta, (int, float)) else None
+
+    return [
+        "## Model Size Comparison",
+        "",
+        "| Metric | Value |",
+        "| -------------- | ----- |",
+        f"| Original Size | {_format_mb(original)} |",
+        f"| Optimized Size | {_format_mb(optimized)} |",
+        f"| Compression | {_format_percent(compression)} |",
+    ]
+
+
+def generate_benchmark_summary(reports):
+    benchmark = reports.get("benchmark", {}) or reports.get("summary", {}).get("benchmark", {})
+    if benchmark.get("status") == "skipped":
+        return [
+            "## Benchmark Results",
+            "",
+            f"- {_plain(benchmark.get('reason') or 'Benchmarking was skipped.')}",
+            f"- {_plain(benchmark.get('note') or 'No benchmark values are available.')}",
+        ]
+
+    original = benchmark.get("original", {})
+    optimized = benchmark.get("optimized", {})
+    comparison = benchmark.get("comparison", {})
+    latency_gain = comparison.get("average_latency_improvement_percent")
+    throughput_gain = comparison.get("throughput_improvement_percent")
+
+    return [
+        "## Benchmark Results",
+        "",
+        "| Metric | Before | After |",
+        "| --------------- | ------ | ------ |",
+        f"| Average Latency | {_format_ms(original.get('average_latency_ms'))} | {_format_ms(optimized.get('average_latency_ms'))} |",
+        f"| Throughput | {_format_throughput(original.get('throughput_inferences_per_second'))} | {_format_throughput(optimized.get('throughput_inferences_per_second'))} |",
+        "",
+        f"Latency Improvement: {_format_percent(latency_gain)}",
+        "",
+        f"Throughput Improvement: {_format_percent(throughput_gain)}",
+    ]
+
+
+def generate_accuracy_summary(reports):
+    accuracy = reports.get("accuracy", {}) or reports.get("summary", {}).get("accuracy_validation", {})
+    if accuracy.get("status") == "skipped":
+        return [
+            "## Accuracy Validation",
+            "",
+            f"- {_plain(accuracy.get('reason') or 'Accuracy validation was skipped.')}",
+            f"- {_plain(accuracy.get('note') or 'No accuracy values are available.')}",
+            "",
+            "Interpretation: Not available",
+        ]
+
+    aggregate = accuracy.get("aggregate", {})
+    cosine = aggregate.get("cosine_similarity")
+    return [
+        "## Accuracy Validation",
+        "",
+        "| Metric | Value |",
+        "| ------------------- | ----- |",
+        f"| Cosine Similarity | {_format_number(cosine, 6)} |",
+        f"| Mean Absolute Error | {_format_number(aggregate.get('mean_absolute_error'), 6)} |",
+        f"| Mean Squared Error | {_format_number(aggregate.get('mean_squared_error'), 6)} |",
+        "",
+        _accuracy_interpretation(cosine),
+    ]
+
+
+def generate_quantization_summary(reports):
+    static_int8 = _static_int8_report(reports)
+    return [
+        "## Quantization Statistics",
+        "",
+        f"- Quantized Operators: {_format_int(static_int8.get('quantized_operator_count'))}",
+        f"- Conv Layers Quantized: {_format_int(static_int8.get('conv_quantization_count'))}",
+        f"- Activation Tensors Quantized: {_format_int(static_int8.get('activation_quantization_count'))}",
+    ]
+
+
+def generate_final_verdict(reports):
+    summary = reports.get("summary", {})
+    benchmark = reports.get("benchmark", {}) or summary.get("benchmark", {})
+    accuracy = reports.get("accuracy", {}) or summary.get("accuracy_validation", {})
+    static_int8 = _static_int8_report(reports)
+    tflite = reports.get("tflite", {}) or summary.get("tflite_conversion", {})
+    compression = summary.get("compression_percent")
+    speedup = _get(benchmark, "comparison", "average_latency_improvement_percent")
+    cosine = _get(accuracy, "aggregate", "cosine_similarity")
+    conclusions = []
+
+    conclusions.append(
+        "Optimization completed successfully."
+        if summary.get("status") == "optimized"
+        else "Optimization did not complete successfully."
+    )
+    if isinstance(compression, (int, float)):
+        if compression >= 40:
+            conclusions.append("Major model size reduction was achieved.")
+        elif compression > 0:
+            conclusions.append("Model size was reduced.")
+        else:
+            conclusions.append("Model size reduction was not achieved.")
+    if isinstance(cosine, (int, float)):
+        if cosine >= 0.99:
+            conclusions.append("Accuracy preservation is excellent.")
+        elif cosine >= 0.95:
+            conclusions.append("Accuracy remained acceptable after optimization.")
+        else:
+            conclusions.append("Accuracy degradation was observed.")
+    if isinstance(speedup, (int, float)):
+        conclusions.append(
+            "Latency improved in benchmark testing."
+            if speedup > 0
+            else "Latency did not improve in benchmark testing."
+        )
+    if static_int8.get("conv_quantization_count"):
+        conclusions.append("CNN layers were successfully quantized.")
+    if tflite.get("status") == "converted":
+        conclusions.append("A TensorFlow Lite artifact is ready for Android deployment.")
+    if summary.get("status") == "optimized":
+        conclusions.append("Model is ready for deployment review on the target hardware.")
+
+    return [
+        "## Final Verdict",
+        "",
+        *_bullet_lines(_limit_items(_dedupe(conclusions), 6), "No final verdict could be generated."),
+    ]
+
+
 def _load_reports(reports_dir):
     reports = {}
     for key, filename in REPORT_FILES.items():
-        path = reports_dir / filename
-        reports[key] = _read_json(path)
+        reports[key] = _read_json(reports_dir / filename)
     return reports
 
 
@@ -54,283 +289,74 @@ def _read_json(path):
         return {}
 
 
-def _build_report_lines(reports):
-    summary = reports.get("summary", {})
-    recommendation = reports.get("recommendation", {})
-    benchmark = reports.get("benchmark") or summary.get("benchmark", {})
-    accuracy = reports.get("accuracy") or summary.get("accuracy_validation", {})
-    size = reports.get("size") or summary.get("model_size_analysis", {})
-    static_int8 = reports.get("static_int8") or summary.get("graph", {})
-    tflite = reports.get("tflite") or summary.get("tflite_conversion", {})
-    pruning = reports.get("pruning", {})
-
-    lines = [
-        "# Final Optimization Report",
-        "",
-        * _model_information(summary, recommendation, tflite),
-        "",
-        * _decision_summary(summary, recommendation),
-        "",
-        * _optimization_steps(summary, static_int8, pruning, tflite),
-        "",
-        * _size_comparison(summary, size),
-        "",
-        * _benchmark_results(benchmark),
-        "",
-        * _accuracy_validation(accuracy),
-        "",
-        * _quantization_statistics(static_int8, tflite),
-        "",
-        * _final_verdict(summary, benchmark, accuracy, static_int8, tflite),
-    ]
-    return lines
-
-
-def _model_information(summary, recommendation, tflite):
-    strategy = _get(
-        recommendation,
-        "recommended_optimization_strategy",
-        default={},
-    )
-    return [
-        "## Model Information",
-        f"- Input model: {_inline(summary.get('original_model') or _get(recommendation, 'model_statistics', 'path'))}",
-        f"- Optimized model: {_inline(summary.get('optimized_model'))}",
-        f"- Hardware target: {_text(summary.get('hardware_target') or recommendation.get('hardware_target'))}",
-        f"- Optimization selected: {_text(summary.get('quantization') or strategy.get('primary_optimization'))}",
-        f"- Runtime recommendation: {_text(summary.get('runtime_recommendation') or _runtime_recommendation(tflite))}",
-        f"- Deployment format: {_text(Path(str(summary.get('optimized_model', ''))).suffix or tflite.get('runtime'))}",
-    ]
-
-
-def _decision_summary(summary, recommendation):
-    decision = summary.get("decision_engine", {})
-    strategy = recommendation.get("recommended_optimization_strategy", {})
-    selected = (
-        decision.get("primary_optimization")
-        or strategy.get("primary_optimization")
-        or "Not available"
-    )
-    rejected = (
-        decision.get("rejected_optimizations")
-        or recommendation.get("rejected_optimization_strategies")
-        or []
-    )
-    reasons = (
-        decision.get("reasons")
-        or recommendation.get("why_decisions_were_made")
-        or []
-    )
-
-    lines = [
-        "## Decision Engine Summary",
-        f"- Selected optimization: {_text(selected)}",
-        f"- Rejected optimizations: {_text(_join_list(rejected))}",
-        "- Reasoning:",
-    ]
-    lines.extend(_bullet_lines(reasons, fallback="No decision reasoning was available."))
-    return lines
-
-
-def _optimization_steps(summary, static_int8, pruning, tflite):
-    steps = []
-    if pruning:
-        steps.append("Structured pruning was applied before export.")
-    elif _has_pipeline_step(summary, "pruning"):
-        steps.append("Structured pruning was selected for this hardware target.")
-
-    if summary.get("graph_optimization"):
-        steps.append("ONNX graph optimization was applied.")
-
-    normalization = static_int8.get("fp32_normalization", {})
-    if normalization.get("normalization_applied"):
-        steps.append("FP16 or mixed precision tensors were normalized to FP32 before INT8 calibration.")
-
-    if static_int8.get("quantized_operator_count"):
-        steps.append("Static INT8 quantization was applied with representative calibration data.")
-
-    quantization = summary.get("quantization")
-    if quantization == "fp16":
-        steps.append("FP16 conversion was applied for GPU-friendly inference.")
-    elif quantization == "int8":
-        steps.append("Dynamic INT8 quantization was applied.")
-    elif quantization == "graph":
-        steps.append("Graph optimization was used without precision quantization.")
-    if tflite.get("status") == "converted":
-        steps.append("The optimized ONNX model was converted to TensorFlow Lite for Android deployment.")
-
-    return [
-        "## Optimization Steps Applied",
-        *_bullet_lines(steps, fallback="No optimization step details were available."),
-    ]
-
-
-def _size_comparison(summary, size):
-    original = summary.get("original_size_mb") or _get(size, "models", "original", "file_size_mb")
-    optimized = summary.get("optimized_size_mb") or _get(size, "models", "optimized", "file_size_mb")
-    compression = summary.get("compression_percent")
-    if compression is None:
-        delta_percent = _get(size, "comparisons", "original_vs_optimized", "size_delta_percent")
-        compression = -delta_percent if isinstance(delta_percent, (int, float)) else None
-
-    return [
-        "## Model Size Comparison",
-        "| Metric | Value |",
-        "|---|---:|",
-        f"| Original size | {_format_mb(original)} |",
-        f"| Optimized size | {_format_mb(optimized)} |",
-        f"| Compression | {_format_percent(compression)} |",
-    ]
-
-
-def _benchmark_results(benchmark):
-    if benchmark.get("status") == "skipped":
-        return [
-            "## Benchmark Results",
-            f"- {benchmark.get('reason', 'Benchmarking was skipped.')}",
-            f"- {benchmark.get('note', 'No benchmark numbers are available for this artifact.')}",
-        ]
-    original = benchmark.get("original", {})
-    optimized = benchmark.get("optimized", {})
-    comparison = benchmark.get("comparison", {})
-    return [
-        "## Benchmark Results",
-        "| Metric | Before | After |",
-        "|---|---:|---:|",
-        f"| Average latency | {_format_ms(original.get('average_latency_ms'))} | {_format_ms(optimized.get('average_latency_ms'))} |",
-        f"| Throughput | {_format_throughput(original.get('throughput_inferences_per_second'))} | {_format_throughput(optimized.get('throughput_inferences_per_second'))} |",
-        "",
-        f"Latency change: {_format_percent(comparison.get('average_latency_improvement_percent'))}. "
-        f"Throughput change: {_format_percent(comparison.get('throughput_improvement_percent'))}.",
-    ]
-
-
-def _accuracy_validation(accuracy):
-    if accuracy.get("status") == "skipped":
-        return [
-            "## Accuracy Validation",
-            f"- {accuracy.get('reason', 'Accuracy validation was skipped.')}",
-            f"- {accuracy.get('note', 'No accuracy numbers are available for this artifact.')}",
-            "",
-            "Interpretation: **not available**.",
-        ]
-    aggregate = accuracy.get("aggregate", {})
-    cosine = aggregate.get("cosine_similarity")
-    interpretation = _accuracy_interpretation(cosine)
-    return [
-        "## Accuracy Validation",
-        "| Metric | Value |",
-        "|---|---:|",
-        f"| Cosine similarity | {_format_number(cosine, digits=6)} |",
-        f"| Mean absolute error | {_format_number(aggregate.get('mean_absolute_error'), digits=6)} |",
-        f"| Mean squared error | {_format_number(aggregate.get('mean_squared_error'), digits=6)} |",
-        "",
-        f"Interpretation: **{interpretation}**.",
-    ]
-
-
-def _quantization_statistics(static_int8, tflite):
-    lines = [
-        "## Quantization Statistics",
-        "| Metric | Value |",
-        "|---|---:|",
-        f"| Quantized operators | {_format_int(static_int8.get('quantized_operator_count'))} |",
-        f"| Conv layers quantized | {_format_int(static_int8.get('conv_quantization_count'))} |",
-        f"| Activation tensors quantized | {_format_int(static_int8.get('activation_quantization_count'))} |",
-    ]
-    if tflite:
-        lines.extend(
-            [
-                "",
-                f"TFLite conversion: **{_text(tflite.get('status'))}**. "
-                f"Runtime: **{_text(tflite.get('runtime'))}**. "
-                f"Final artifact: {_inline(tflite.get('tflite_model'))}.",
-            ]
-        )
-    return lines
-
-
-def _final_verdict(summary, benchmark, accuracy, static_int8, tflite):
-    compression = summary.get("compression_percent")
-    speedup = _get(benchmark, "comparison", "average_latency_improvement_percent")
-    cosine = _get(accuracy, "aggregate", "cosine_similarity")
-
-    statements = []
-    if summary.get("status") == "optimized":
-        statements.append("Optimization completed successfully.")
-    if isinstance(compression, (int, float)):
-        if compression >= 40:
-            statements.append("Major model size reduction was achieved.")
-        elif compression > 0:
-            statements.append("Model size was reduced.")
-        else:
-            statements.append("Model size did not improve in this run.")
-    if isinstance(cosine, (int, float)):
-        if cosine >= 0.99:
-            statements.append("Accuracy stayed very close to the original model.")
-        elif cosine >= 0.95:
-            statements.append("Accuracy remained usable, but should be checked with real validation data.")
-        else:
-            statements.append("Accuracy drift is risky and needs review before deployment.")
-    if isinstance(speedup, (int, float)):
-        if speedup > 1:
-            statements.append("Latency improved in the benchmark.")
-        elif speedup > -1:
-            statements.append("Latency was roughly unchanged in the benchmark.")
-        else:
-            statements.append("Latency did not improve in the benchmark.")
-    if static_int8.get("conv_quantization_count"):
-        statements.append("CNN layers were quantized with static INT8 calibration.")
-    if tflite.get("status") == "converted":
-        statements.append("A TensorFlow Lite artifact was generated for Android deployment.")
-    if benchmark.get("status") == "skipped":
-        statements.append("Runtime benchmarking should be performed with TensorFlow Lite tooling or on an Android device.")
-
-    return [
-        "## Final Verdict",
-        *_bullet_lines(statements, fallback="Final verdict could not be determined from available reports."),
-    ]
+def _static_int8_report(reports):
+    return reports.get("static_int8", {}) or reports.get("summary", {}).get("graph", {})
 
 
 def _accuracy_interpretation(cosine):
     if not isinstance(cosine, (int, float)):
-        return "not available"
+        return "Interpretation: Not available"
     if cosine >= 0.99:
-        return "excellent"
+        return "Excellent accuracy preservation"
     if cosine >= 0.95:
-        return "acceptable"
-    return "risky"
-
-
-def _has_pipeline_step(summary, step):
-    return step in (summary.get("decision_engine", {}).get("pipeline") or [])
+        return "Good accuracy preservation"
+    return "Accuracy degradation observed"
 
 
 def _runtime_recommendation(tflite):
     if tflite.get("runtime") == "tflite":
         return "Use TensorFlow Lite on Android."
-    return None
+    return "Use the optimized model with the selected target runtime."
+
+
+def _deployment_format(optimized_model, tflite):
+    if optimized_model:
+        suffix = Path(str(optimized_model)).suffix
+        if suffix:
+            return suffix
+    if tflite.get("runtime") == "tflite":
+        return ".tflite"
+    return ".onnx"
+
+
+def _pipeline_has(summary, step):
+    return step in (summary.get("decision_engine", {}).get("pipeline") or [])
 
 
 def _bullet_lines(items, fallback):
     if not items:
         return [f"- {fallback}"]
-    return [f"- {_text(item)}" for item in items]
+    return [f"- {_plain(item)}" for item in items]
+
+
+def _limit_items(items, limit):
+    return list(items or [])[:limit]
+
+
+def _dedupe(items):
+    seen = set()
+    result = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        result.append(item)
+    return result
 
 
 def _get(data, *keys, default=None):
     current = data
     for key in keys:
-        if not isinstance(current, dict) or key not in current:
+        if not isinstance(current, dict):
             return default
-        current = current[key]
+        current = current.get(key, default)
     return current
 
 
 def _join_list(items):
     if not items:
-        return "None reported"
-    return ", ".join(str(item) for item in items)
+        return "None"
+    return ", ".join(str(item).replace("_", " ") for item in items)
 
 
 def _inline(value):
@@ -339,7 +365,7 @@ def _inline(value):
     return f"`{value}`"
 
 
-def _text(value):
+def _plain(value):
     if value in (None, ""):
         return "Not available"
     if isinstance(value, list):
@@ -362,16 +388,16 @@ def _format_ms(value):
 def _format_throughput(value):
     if not isinstance(value, (int, float)):
         return "Not available"
-    return f"{value:.2f} / sec"
+    return f"{value:.2f}/sec"
 
 
 def _format_percent(value):
     if not isinstance(value, (int, float)):
         return "Not available"
-    return f"{value:.2f}%"
+    return f"{value:.2f} %"
 
 
-def _format_number(value, digits=4):
+def _format_number(value, digits):
     if not isinstance(value, (int, float)):
         return "Not available"
     return f"{value:.{digits}f}"
@@ -381,3 +407,4 @@ def _format_int(value):
     if not isinstance(value, int):
         return "Not available"
     return f"{value:,}"
+

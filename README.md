@@ -89,8 +89,8 @@ optimization pipeline, and upload artifacts.
 
 After the workflow completes, open the finished workflow run and download:
 
-- `optimized-output`: optimized model artifacts and `optimization_stats.json`
-- `optimization-reports`: recommendation, benchmark, validation, and final reports
+- `optimized-output`: optimized model artifacts, `optimization_stats.json`, and `final_execution_report.md`
+- `optimization-reports`: recommendation, benchmark, validation, and detailed JSON reports
 - `execution-logs`: `logs/pipeline.log` and workflow execution logs
 
 ### Placeholder Screenshots

@@ -166,7 +166,7 @@ def main():
 
     report = generate_validation_report(optimized_model)
     logger.info(f"Validation report: {report}")
-    final_report = generate_final_report()
+    final_report = generate_final_report(output_path="output/final_execution_report.md")
     logger.info("Final execution report: %s", final_report)
     logger.info("Adaptive pipeline completed successfully")
 

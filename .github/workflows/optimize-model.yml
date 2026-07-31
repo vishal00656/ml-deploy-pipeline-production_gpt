@@ -107,7 +107,7 @@ jobs:
 
           summary_path = Path(os.environ["GITHUB_STEP_SUMMARY"])
           stats_path = Path("output/optimization_stats.json")
-          final_report = Path("reports/final_execution_report.md")
+          final_report = Path("output/final_execution_report.md")
 
           stats = {}
           if stats_path.exists():

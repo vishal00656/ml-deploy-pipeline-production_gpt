@@ -1,13 +1,94 @@
-venv/
+# Python bytecode and caches
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
 
-output/
-reports/
-converted/
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
 
-input/calibration/
+# Packaging and build outputs
+build/
+dist/
+*.egg-info/
+.eggs/
 
-*.onnx
+# Runtime outputs, reports, and logs
+output/*
+outputs/*
+reports/*
+logs/*
+converted/*
+comparison/*
+artifacts/
+runs/
+wandb/
+mlruns/
+
+!output/README.md
+!reports/README.md
+!logs/README.md
+!converted/README.md
+!comparison/README.md
+
+# Benchmark artifacts
+benchmark/results/
+benchmark/artifacts/
+benchmark/*.json
+benchmark/*.csv
+benchmark/*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+~$*
+.DS_Store
+Thumbs.db
+
+# Model artifacts and deployment binaries
 *.pt
 *.pth
+*.onnx
+*.onnx_data
+*.engine
+*.tflite
+*.h5
+*.keras
+*.pb
+*.ckpt
+*.safetensors
+*.bin
+
+# Datasets and calibration samples
+data/
+dataset/
+datasets/
+input/datasets/
+input/calibration/*
+!input/calibration/README.md
+
+# Downloaded model caches
+.cache/huggingface/
+hf_cache/
+huggingface_cache/
+models/huggingface/
+models/downloaded/
+models/cache/
+models/**/snapshots/
+models/**/blobs/
+
+# Local environment files
+.env
+.env.*
+!.env.example
